@@ -161,7 +161,7 @@
         let SUPABASE_ANON_KEY = localStorage.getItem("sb_anon_key");
 
         if (!SUPABASE_ANON_KEY) {
-            SUPABASE_ANON_KEY = prompt("sb_secret_ECK-roB1pG54vGHIh7Xw1g_9Ji2epPn");
+            SUPABASE_ANON_KEY = prompt("Masukkan 'Publishable key' Supabase Lu (Yang diawali sb_publishable_...):");
             if (SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.trim() !== "") {
                 localStorage.setItem("sb_anon_key", SUPABASE_ANON_KEY.trim());
             } else {
