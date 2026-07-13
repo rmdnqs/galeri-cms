@@ -13,13 +13,13 @@
         .hidden-section { display: none !important; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-12 antialiased">
+<body class="bg-slate-950 text-slate-100 min-h-screen p-4 sm:p-8 md:p-12 antialiased">
 
     <!-- ========================================== -->
     <!-- 1. MODUL OTENTIKASI (LOGIN FORM)          -->
     <!-- ========================================== -->
-    <div id="seksi-login" class="flex min-h-[70vh] items-center justify-center px-4 py-12 hidden-section">
-        <div class="w-full max-w-md space-y-8 border border-slate-800 bg-slate-900 p-8 rounded-2xl shadow-2xl">
+    <div id="seksi-login" class="flex min-h-[80vh] items-center justify-center px-2 py-6 hidden-section">
+        <div class="w-full max-w-md space-y-8 border border-slate-800 bg-slate-900 p-6 sm:p-8 rounded-2xl shadow-2xl">
             <div class="text-center">
                 <span class="text-3xl">🔒</span>
                 <h2 class="mt-4 text-2xl font-black tracking-tight text-white uppercase">Central CMS Access</h2>
@@ -45,18 +45,18 @@
     <!-- ========================================== -->
     <!-- 2. CORE WORKSPACE (MAIN CMS)              -->
     <!-- ========================================== -->
-    <div id="seksi-workspace" class="max-w-7xl mx-auto space-y-8 hidden-section">
+    <div id="seksi-workspace" class="max-w-7xl mx-auto space-y-6 sm:space-y-8 hidden-section">
         
         <!-- HEADER UTAMA -->
-        <div class="border-b border-slate-800 pb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="border-b border-slate-800 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-                <h1 class="text-3xl font-black text-white tracking-tight">CMS Iwan Poles ART Galeri</h1>
-                <p class="text-slate-400 text-sm mt-1">Otoritas kendali penuh aset, distribusi konten, dan branding visual galeri.</p>
+                <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">CMS Iwan Poles ART Galeri</h1>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1">Otoritas kendali penuh aset, distribusi konten, dan branding visual galeri.</p>
             </div>
-            <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+            <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
                 <span class="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-bold px-3 py-1.5 rounded-full shadow-sm">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Secure Session Connected
+                    Connected
                 </span>
                 <button onclick="prosesLogoutAdmin()" class="bg-red-500/10 border border-red-500/20 hover:bg-red-500 hover:text-white text-red-400 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
                     Log out
@@ -65,11 +65,11 @@
         </div>
 
         <!-- GRID INTERFACE -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:grid-cols-1 md:gap-8 items-start">
             
             <!-- MODUL INVENTARIS FORM -->
-            <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+            <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
                     <span>📦</span> Modul Inventaris Lukisan
                 </h2>
                 
@@ -77,18 +77,18 @@
                     <!-- ID Tersembunyi untuk Mode Edit -->
                     <input type="hidden" id="input-id-lukisan">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                         <div class="space-y-2">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Judul Karya</label>
-                            <input type="text" id="input-judul" required placeholder="Masukkan judul lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                            <input type="text" id="input-judul" required placeholder="Masukkan judul lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
                         </div>
                         <div class="space-y-2">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Harga Karya (Rp)</label>
-                            <input type="text" id="input-harga" required placeholder="Contoh: 7.500.000" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                            <input type="text" id="input-harga" required placeholder="Contoh: 7.500.000" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
                         <div class="space-y-2">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Kategori Kurasi Seni</label>
                             <select id="input-kategori" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
@@ -100,7 +100,7 @@
                         </div>
                         <div class="space-y-2">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Ukuran Lukisan</label>
-                            <input type="text" id="input-ukuran" required placeholder="Misal: 120 x 90 cm" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                            <input type="text" id="input-ukuran" required placeholder="Misal: 120 x 90 cm" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
                         </div>
                         <div class="space-y-2">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Status Karya</label>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                         <div class="space-y-2">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Foto Lukisan</label>
                             <input type="file" id="input-file-foto" accept="image/*" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-2 text-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
@@ -132,28 +132,28 @@
 
                     <div class="space-y-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Deskripsi Narasi Karya</label>
-                        <textarea id="input-deskripsi" rows="3" placeholder="Tuliskan deskripsi narasi atau filosofi dari lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"></textarea>
+                        <textarea id="input-deskripsi" rows="3" placeholder="Tuliskan deskripsi narasi atau filosofi dari lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
                     </div>
 
                     <div class="p-4 bg-slate-950 border border-slate-850 rounded-xl space-y-3">
                         <span class="block text-xs font-bold uppercase tracking-widest text-amber-500">Kategori Konten</span>
-                        <div class="flex flex-col sm:flex-row sm:gap-8 space-y-2 sm:space-y-0">
-                            <label class="flex items-center gap-3 cursor-pointer text-sm select-none">
-                                <input type="checkbox" id="input-featured" class="w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
+                        <div class="flex flex-col gap-2.5">
+                            <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
+                                <input type="checkbox" id="input-featured" class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
                                 <span class="text-slate-300">Publish ke Halaman Utama (Featured)</span>
                             </label>
-                            <label class="flex items-center gap-3 cursor-pointer text-sm select-none">
-                                <input type="checkbox" id="input-archive" checked class="w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
+                            <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
+                                <input type="checkbox" id="input-archive" checked class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
                                 <span class="text-slate-300">Publish ke Menu Koleksi (Arsip Katalog)</span>
                             </label>
                         </div>
                     </div>
 
-                    <div class="flex gap-3">
-                        <button type="submit" id="btn-submit-karya" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 rounded-xl transition-all tracking-wider uppercase text-xs cursor-pointer shadow-lg shadow-amber-500/10">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button type="submit" id="btn-submit-karya" class="w-full sm:flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 rounded-xl transition-all tracking-wider uppercase text-xs cursor-pointer shadow-lg shadow-amber-500/10">
                             Simpan Data
                         </button>
-                        <button type="button" id="btn-batal-edit" onclick="bersihkanFormKarya()" class="bg-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white px-5 rounded-xl text-xs font-bold uppercase tracking-wider border border-slate-800 transition-all cursor-pointer hidden-section">
+                        <button type="button" id="btn-batal-edit" onclick="bersihkanFormKarya()" class="w-full sm:w-auto bg-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white px-5 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider border border-slate-800 transition-all cursor-pointer hidden-section">
                             Batal
                         </button>
                     </div>
@@ -161,8 +161,8 @@
             </div>
 
             <!-- MODUL BRANDING & WARNA -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
                     <span>🎨</span> Kontrol Warna & Branding Web
                 </h2>
                 <div class="space-y-4">
@@ -179,7 +179,7 @@
                         <textarea id="theme-deskripsi-hero" rows="2" placeholder="Slogan galeri..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-4 pt-3 border-t border-slate-850">
+                    <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-850">
                         <div class="bg-slate-950/50 p-2 rounded-xl border border-slate-850 flex items-center justify-between">
                             <span class="text-xs text-slate-400 pl-1">BG Utama</span>
                             <input type="color" id="theme-bg-utama" value="#0f172a" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
@@ -205,12 +205,14 @@
             </div>
         </div>
 
-        <!-- TABEL INVENTARIS LUKISAN -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl">
-            <h2 class="text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+        <!-- TABEL INVENTARIS LUKISAN (RESPONSIF MODE: CARD DI HP, TABLE DI PC) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-4 shadow-xl">
+            <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
                 <span>📋</span> Daftar Lukisan
             </h2>
-            <div class="overflow-x-auto rounded-xl border border-slate-850">
+            
+            <!-- Tampilan Desktop/Tablet (MD Up) -->
+            <div class="hidden md:block overflow-x-auto rounded-xl border border-slate-850">
                 <table class="w-full text-left border-collapse text-sm">
                     <thead>
                         <tr class="bg-slate-950 border-b border-slate-850 text-xs font-bold uppercase tracking-wider text-slate-400">
@@ -228,6 +230,11 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Tampilan Mobile (Kurang dari MD) -->
+            <div id="kartu-list-lukisan-mobile" class="block md:hidden space-y-4">
+                <!-- Data mobile di-inject dari javascript di bawah -->
+            </div>
         </div>
     </div>
 
@@ -238,18 +245,15 @@
         // 🔑 KONFIGURASI CORE DB (MASUKKAN KUNCI PUBLIK LU DI SINI)
         // ===================================================================
         const SUPABASE_URL = "https://wnlbsvykmxgeoxddmpus.supabase.co"; 
-        const SUPABASE_ANON_KEY = "sb_publishable_14Keu0yX40rrR2CfD9neog_noP4c6kI"; // Ganti dengan Publishable Key utuh milik Lu
+        const SUPABASE_ANON_KEY = "sb_publishable_14Keu0yX40rrR2CfD9neog_noP4c6kI"; 
 
-        // Inisialisasi Klien Supabase Cloud secara global
         const dbCloud = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        let dataLukisanAktif = []; // Tempat menyimpan cache data lukisan
+        let dataLukisanAktif = []; 
 
-        // Format Angka ke Rupiah
         function formatRupiah(angka) {
             return 'Rp ' + parseFloat(angka).toLocaleString('id-ID');
         }
 
-        // Live Auto-Separator Ribuan saat Mengetik Harga
         document.getElementById("input-harga").addEventListener("keyup", function(e) {
             let nilaiPolos = this.value.replace(/\D/g, "");
             this.value = nilaiPolos ? parseFloat(nilaiPolos).toLocaleString("id-ID") : "";
@@ -259,7 +263,7 @@
         // 🔒 SISTEM MANAJEMEN OTENTIKASI KENDALI AKSES
         // ===================================================================
         async function inisialisasiSistem() {
-            localStorage.removeItem("sb_anon_key"); // Clear jejak trik prompt jadul
+            localStorage.removeItem("sb_anon_key"); 
             await cekSesiOtentikasi();
         }
 
@@ -305,11 +309,10 @@
         }
 
         // ===================================================================
-        // 💾 OPERASI CRUD CORE DATA (LUKISAN & THEME)
+        // 💾 OPERASI CRUD DATA (MENDUKUNG RESPONSIVE RENDER)
         // ===================================================================
         async function muatDataAdmin() {
             try {
-                // 1. Ambil Data Konfigurasi Branding Tema Web
                 let { data: config } = await dbCloud.from('konfigurasi_web').select('*').eq('id', 1).single();
                 if (config) {
                     document.getElementById("theme-logo").value = config.logo_url || "";
@@ -321,13 +324,15 @@
                     document.getElementById("theme-teks").value = config.warna_teks_utama || "#ffffff";
                 }
 
-                // 2. Ambil List  Semua Lukisan
                 let { data: list, error } = await dbCloud.from('lukisan').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
                 
                 dataLukisanAktif = list || [];
                 const tbody = document.getElementById("tabel-list-lukisan");
+                const containerMobile = document.getElementById("kartu-list-lukisan-mobile");
+                
                 tbody.innerHTML = "";
+                containerMobile.innerHTML = "";
 
                 if(dataLukisanAktif.length > 0) {
                     dataLukisanAktif.forEach(item => {
@@ -335,14 +340,15 @@
                             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' 
                             : (item.status === 'Terjual' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400');
 
+                        // 1. Render versi Tabel Desktop
                         tbody.insertAdjacentHTML('beforeend', `
                             <tr class="hover:bg-slate-950/40 transition-colors group">
                                 <td class="p-4 flex justify-center">
-                                    <img src="${item.media}" class="w-12 h-12 object-cover rounded-xl border border-slate-800 group-hover:border-slate-600 shadow-md transition-all">
+                                    <img src="${item.media}" class="w-12 h-12 object-cover rounded-xl border border-slate-800 shadow-md">
                                 </td>
-                                <td class="p-4 font-semibold text-white group-hover:text-amber-400 transition-all">${item.judul}</td>
+                                <td class="p-4 font-semibold text-white">${item.judul}</td>
                                 <td class="p-4">
-                                    <span class="bg-slate-950 px-2.5 py-1 rounded-lg text-xs font-medium border border-slate-850 text-slate-300">${item.kategori || '-'}</span>
+                                    <span class="bg-slate-950 px-2.5 py-1 rounded-lg text-xs border border-slate-855 text-slate-300">${item.kategori || '-'}</span>
                                 </td>
                                 <td class="p-4 font-mono text-xs text-slate-400">${item.ukuran}</td>
                                 <td class="p-4 font-mono font-bold text-amber-400">${formatRupiah(item.harga)}</td>
@@ -350,26 +356,50 @@
                                     <span class="text-xs px-2.5 py-1 rounded-full font-semibold border ${badgeColor}">${item.status}</span>
                                 </td>
                                 <td class="p-4 text-center space-x-2">
-                                    <button onclick="pemicuEditKarya(${item.id})" class="text-xs bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500 hover:text-slate-950 px-3 py-1.5 rounded-xl text-amber-400 font-semibold transition-all cursor-pointer">
-                                        Ubah
-                                    </button>
-                                    <button onclick="hapusKarya(${item.id})" class="text-xs bg-red-500/10 border border-red-500/20 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl text-red-400 font-semibold transition-all cursor-pointer">
-                                        Hapus
-                                    </button>
+                                    <button onclick="pemicuEditKarya(${item.id})" class="text-xs bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500 hover:text-slate-950 px-3 py-1.5 rounded-xl text-amber-400 font-semibold cursor-pointer">Ubah</button>
+                                    <button onclick="hapusKarya(${item.id})" class="text-xs bg-red-500/10 border border-red-500/20 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl text-red-400 font-semibold cursor-pointer">Hapus</button>
                                 </td>
                             </tr>
                         `);
+
+                        // 2. Render versi Card Mobile
+                        containerMobile.insertAdjacentHTML('beforeend', `
+                            <div class="bg-slate-950/40 border border-slate-850 p-4 rounded-xl space-y-3">
+                                <div class="flex gap-3 items-center">
+                                    <img src="${item.media}" class="w-16 h-16 object-cover rounded-xl border border-slate-800 shadow-sm flex-shrink-0">
+                                    <div class="min-w-0 flex-1">
+                                        <h4 class="font-bold text-white truncate text-base">${item.judul}</h4>
+                                        <p class="text-xs text-slate-400 font-mono mt-0.5">${item.ukuran}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-850/50">
+                                    <div class="space-y-1">
+                                        <span class="bg-slate-900 px-2 py-0.5 rounded text-[11px] border border-slate-800 text-slate-300 mr-1.5">${item.kategori || '-'}</span>
+                                        <span class="text-[11px] px-2 py-0.5 rounded-full font-semibold border ${badgeColor}">${item.status}</span>
+                                    </div>
+                                    <span class="font-mono font-bold text-amber-400 text-sm">${formatRupiah(item.harga)}</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 pt-1">
+                                    <button onclick="pemicuEditKarya(${item.id})" class="w-full text-center text-xs bg-amber-500/10 border border-amber-500/20 py-2.5 rounded-xl text-amber-400 font-bold">Ubah</button>
+                                    <button onclick="hapusKarya(${item.id})" class="w-full text-center text-xs bg-red-500/10 border border-red-500/20 py-2.5 rounded-xl text-red-400 font-bold">Hapus</button>
+                                </div>
+                            </div>
+                        `);
                     });
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-500">Belum ada data lukisan terekam.</td></tr>`;
+                    const tNoData = `<tr><td colspan="7" class="p-8 text-center text-slate-500">Belum ada data lukisan terekam.</td></tr>`;
+                    const mNoData = `<p class="text-sm text-center text-slate-500 italic py-4">Belum ada data lukisan terekam.</p>`;
+                    tbody.innerHTML = tNoData;
+                    containerMobile.innerHTML = mNoData;
                 }
             } catch (err) {
                 console.error(err);
-                document.getElementById("tabel-list-lukisan").innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-400 italic">Gagal sinkronisasi data cloud: ${err.message}</td></tr>`;
+                const errMsg = `Gagal sinkronisasi data cloud: ${err.message}`;
+                document.getElementById("tabel-list-lukisan").innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-400 italic">${errMsg}</td></tr>`;
+                document.getElementById("kartu-list-lukisan-mobile").innerHTML = `<p class="text-xs text-center text-red-400 italic">${errMsg}</p>`;
             }
         }
 
-        // Aksi Simpan Data (Mendukung Insert Baru & Update Data Lama)
         async function simpanDataLukisan(e) {
             e.preventDefault();
             const btnSubmit = document.getElementById("btn-submit-karya");
@@ -390,7 +420,6 @@
             try {
                 let fotoUrl = null;
 
-                // Jika user meng-upload file gambar baru
                 if (fileFoto) {
                     const fileExt = fileFoto.name.split('.').pop();
                     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
@@ -401,7 +430,6 @@
                     fotoUrl = publicUrlData.publicUrl;
                 }
 
-                // Siapkan paket payload objek data
                 const payload = {
                     judul,
                     harga: parseFloat(hargaBersih),
@@ -414,17 +442,13 @@
                     is_archive: isArchive
                 };
 
-                if (fotoUrl) {
-                    payload.media = fotoUrl; // Update link gambar baru jika ada
-                }
+                if (fotoUrl) { payload.media = fotoUrl; }
 
                 if (idLukisan) {
-                    // MODE EDIT DATA (UPDATE)
                     const { error: updateError } = await dbCloud.from('lukisan').update(payload).eq('id', idLukisan);
                     if (updateError) throw updateError;
                     alert("Aset Lukisan berhasil diperbarui secara sistemis!");
                 } else {
-                    // MODE BULK BARU (INSERT)
                     if (!fotoUrl) throw new Error("File foto lukisan wajib diunggah untuk karya baru!");
                     const { error: insertError } = await dbCloud.from('lukisan').insert([payload]);
                     if (insertError) throw insertError;
@@ -437,16 +461,14 @@
                 alert("Gagal memproses operasi database: " + err.message);
             } finally {
                 btnSubmit.disabled = false;
-                document.getElementById("btn-submit-karya").innerText = "Eksekusi Masuk Database Cloud";
+                document.getElementById("btn-submit-karya").innerText = "Simpan Data";
             }
         }
 
-        // Pemicu Pengisian Form Saat Klik Tombol Ubah/Edit
         function pemicuEditKarya(id) {
             const lukisan = dataLukisanAktif.find(item => item.id === id);
             if (!lukisan) return;
 
-            // Naikkan data ke Form Input
             document.getElementById("input-id-lukisan").value = lukisan.id;
             document.getElementById("input-judul").value = lukisan.judul;
             document.getElementById("input-harga").value = parseFloat(lukisan.harga).toLocaleString("id-ID");
@@ -458,27 +480,23 @@
             document.getElementById("input-featured").checked = lukisan.is_featured;
             document.getElementById("input-archive").checked = lukisan.is_archive;
 
-            // Kondisikan tombol & info bantuan file foto
             document.getElementById("input-file-foto").required = false;
             document.getElementById("info-file-edit").classList.remove("hidden-section");
             document.getElementById("btn-batal-edit").classList.remove("hidden-section");
             document.getElementById("btn-submit-karya").innerText = "Simpan Perubahan Aset";
             
-            // Scroll halus otomatis ke area form input agar fokus
             document.getElementById("form-cms").scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Bersihkan Form Kembali ke Default
         function bersihkanFormKarya() {
             document.getElementById("form-cms").reset();
             document.getElementById("input-id-lukisan").value = "";
             document.getElementById("input-file-foto").required = true;
             document.getElementById("info-file-edit").classList.add("hidden-section");
             document.getElementById("btn-batal-edit").classList.add("hidden-section");
-            document.getElementById("btn-submit-karya").innerText = "Eksekusi Masuk Database Cloud";
+            document.getElementById("btn-submit-karya").innerText = "Simpan Data";
         }
 
-        // Hapus Karya Lukisan Permanen
         async function hapusKarya(id) {
             if(confirm("Yakin ingin menghapus lukisan ini secara permanen dari cloud?")) {
                 const { error } = await dbCloud.from('lukisan').delete().eq('id', id);
@@ -487,7 +505,6 @@
             }
         }
 
-        // Simpan Konfigurasi Branding Tema Web Global
         async function simpanTemaGlobal() {
             const btnTema = document.getElementById("btn-simpan-tema");
             btnTema.innerText = "DEPLOYING TEMA..."; btnTema.disabled = true;
@@ -513,7 +530,6 @@
             }
         }
 
-        // Jalankan Inisialisasi Otomatis Saat Engine Siap
         window.addEventListener("DOMContentLoaded", inisialisasiSistem);
     </script>
 </body>
