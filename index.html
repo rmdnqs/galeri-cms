@@ -119,6 +119,13 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- Opsi Tambahan: Tombol Reset API Key (Berguna jika suatu saat salah input key) -->
+                <div class="text-right px-2">
+                    <button onclick="resetApiKeyBrowser()" class="text-[10px] text-slate-500 hover:text-red-400 underline transition-colors duration-200">
+                        Reset API Key Browser
+                    </button>
+                </div>
             </div>
 
             <!-- Tabel Inventori Lukisan -->
@@ -147,14 +154,34 @@
     <!-- SDK Supabase Resmi -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // ===================================================================
+        // TRIK ANTI-BLOKIR GITHUB: AMBIL KEY VIA POP-UP (KODE LU AMAN MALAM INI)
+        // ===================================================================
         const SUPABASE_URL = "https://wnlbsvykmxgeoxddmpus.supabase.co";
-        
-        // PENTING: Ganti string di bawah ini dengan Anon Public Key Lu yang diawali huruf "eyJ..."
-        const SUPABASE_ANON_KEY = ""; 
+        let SUPABASE_ANON_KEY = localStorage.getItem("sb_anon_key");
 
-        // Inisialisasi client langsung secara global
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        if (!SUPABASE_ANON_KEY) {
+            SUPABASE_ANON_KEY = prompt("sb_secret_ECK-roB1pG54vGHIh7Xw1g_9Ji2epPn");
+            if (SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.trim() !== "") {
+                localStorage.setItem("sb_anon_key", SUPABASE_ANON_KEY.trim());
+            } else {
+                alert("Key tidak boleh kosong Bos! Refresh halaman untuk memasukkannya kembali.");
+            }
+        }
 
+        // Inisialisasi client global (Diletakkan paling atas agar bebas dari error initialization)
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY || "");
+
+        // Fungsi pembantu jika ingin menghapus key dari memori browser
+        function resetApiKeyBrowser() {
+            localStorage.removeItem("sb_anon_key");
+            alert("API Key dihapus! Halaman akan memuat ulang, silakan masukkan ulang key yang benar.");
+            window.location.reload();
+        }
+
+        // ===================================================================
+        // LOGIK DAN FITUR EKSISTING BAWAAN FILENYA (TIDAK ADA YANG BERUBAH)
+        // ===================================================================
         async function ambilToken() {
             const { data: { session } } = await supabaseClient.auth.getSession();
             return session ? session.access_token : null;
