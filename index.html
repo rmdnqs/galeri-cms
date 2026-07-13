@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - IWAN POLES ART</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .hidden-section { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased">
+
+    <!-- 1. HALAMAN LOGIN FORM -->
+    <div id="seksi-login" class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md space-y-8 border border-white/5 bg-slate-900/40 p-8 rounded-3xl backdrop-blur-xl shadow-2xl shadow-black/50">
+            <div class="text-center">
+                <span class="text-2xl">🔒</span>
+                <h2 class="mt-4 text-2xl font-black tracking-tight text-white uppercase">Curator Access Only</h2>
+                <p class="mt-2 text-xs text-slate-400">Masuk untuk mengelola galeri IWAN POLES ART.</p>
+            </div>
+            <form class="mt-8 space-y-4" onsubmit="prosesLoginAdmin(event)">
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">Email Admin</label>
+                    <input id="login-email" type="email" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition-all duration-300" placeholder="admin@iwanpolesart.com">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">Password</label>
+                    <input id="login-password" type="password" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition-all duration-300" placeholder="••••••••">
+                </div>
+                <div id="pesan-error-login" class="text-xs text-red-400 italic hidden-section">Email atau password salah!</div>
+                <button type="submit" id="btn-login" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 cursor-pointer disabled:opacity-50">
+                    Authorize Entry
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. DASHBOARD UTAMA ADMIN -->
+    <div id="seksi-dashboard" class="hidden-section">
+        <header class="border-b border-white/5 bg-slate-900/60 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">🎨</span>
+                    <div>
+                        <h1 class="text-base font-black text-white tracking-wider uppercase">Studio Console</h1>
+                        <p class="text-[10px] text-emerald-400 flex items-center gap-1 font-medium">• Serverless Core Active</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="label-admin-email" class="text-xs text-slate-400 hidden sm:inline"></span>
+                    <button onclick="prosesLogoutAdmin()" class="border border-red-500/20 bg-red-500/10 hover:bg-red-500 hover:text-white text-red-400 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <!-- Form Input Lukisan -->
+            <div class="space-y-6">
+                <div class="border border-white/5 bg-slate-900/20 p-6 rounded-3xl space-y-4">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-amber-500 border-b border-white/5 pb-2">Kurasi Lukisan Baru</h2>
+                    
+                    <form id="form-lukisan" onsubmit="simpanDataLukisan(event)" class="space-y-4 text-xs">
+                        <input type="hidden" id="lukisan-id">
+                        
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-semibold text-slate-400 uppercase">Judul Karya</label>
+                            <input id="form-judul" type="text" required class="w-full bg-slate-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-semibold text-slate-400 uppercase">Kategori</label>
+                                <select id="form-kategori" class="w-full bg-slate-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Abstrak">Abstrak</option>
+                                    <option value="Realisme">Realisme</option>
+                                    <option value="Lanskap">Lanskap</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-semibold text-slate-400 uppercase">Status Unit</label>
+                                <select id="form-status" class="w-full bg-slate-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Tersedia">Tersedia</option>
+                                    <option value="Terjual">Terjual</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-semibold text-slate-400 uppercase">Dimensi Ukuran</label>
+                                <input id="form-ukuran" type="text" placeholder="120 x 90 cm" required class="w-full bg-slate-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-semibold text-slate-400 uppercase">Mahar Harga (Rp)</label>
+                                <input id="form-harga" type="number" required class="w-full bg-slate-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-semibold text-slate-400 uppercase">URL Gambar / Media</label>
+                            <input id="form-media" type="url" required placeholder="https://..." class="w-full bg-slate-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-semibold text-slate-400 uppercase">Deskripsi Narasi Seni</label>
+                            <textarea id="form-deskripsi" rows="3" class="w-full bg-slate-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 placeholder-slate-600" placeholder="Tulis makna lukisan..."></textarea>
+                        </div>
+                        <div class="flex items-center gap-2 py-2">
+                            <input id="form-featured" type="checkbox" class="w-4 h-4 rounded accent-amber-500 bg-slate-950 border-white/10">
+                            <label for="form-featured" class="text-[10px] font-bold uppercase tracking-wide text-slate-300 cursor-pointer">Pasang di Slide Carousel Unggulan</label>
+                        </div>
+                        
+                        <div class="flex gap-2 pt-2">
+                            <button type="submit" class="flex-1 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl transition-all duration-300 hover:bg-amber-600 uppercase tracking-widest cursor-pointer">Simpan Data</button>
+                            <button type="button" onclick="bersihkanForm()" class="bg-slate-900 border border-white/5 text-slate-400 font-bold px-4 rounded-xl transition-all duration-300 hover:text-white cursor-pointer">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tabel Inventori Lukisan -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="border border-white/5 bg-slate-900/20 p-6 rounded-3xl space-y-4">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-white">Daftar Koleksi Galeri Saat Ini</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="border-b border-white/5 text-slate-400 uppercase tracking-wider text-[10px]">
+                                    <th class="py-3 font-medium">Karya</th>
+                                    <th class="py-3 font-medium">Kategori</th>
+                                    <th class="py-3 font-medium">Mahar</th>
+                                    <th class="py-3 font-medium text-center">Slide</th>
+                                    <th class="py-3 font-medium text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-list-lukisan" class="divide-y divide-white/5"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SDK Supabase Resmi -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = "https://wnlbsvykmxgeoxddmpus.supabase.co";
+        
+        // PENTING: Ganti string di bawah ini dengan Anon Public Key Lu yang diawali huruf "eyJ..."
+        const SUPABASE_ANON_KEY = ""; 
+
+        // Inisialisasi client langsung secara global
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function ambilToken() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            return session ? session.access_token : null;
+        }
+
+        async function cekStatusOtentikasi() {
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session && session.user) {
+                    tampilkanDashboard(session.user.email);
+                } else {
+                    tampilkanLoginForm();
+                }
+            } catch (error) {
+                console.error("Gagal verifikasi sesi login:", error);
+                tampilkanLoginForm();
+            }
+        }
+
+        async function prosesLoginAdmin(e) {
+            e.preventDefault();
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+            const errorLabel = document.getElementById("pesan-error-login");
+            const btnLogin = document.getElementById("btn-login");
+            
+            errorLabel.classList.add("hidden-section");
+            btnLogin.disabled = true;
+            btnLogin.innerText = "Authorizing...";
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) throw error;
+
+                if (data.session) {
+                    tampilkanDashboard(data.user.email);
+                }
+            } catch (err) {
+                errorLabel.innerText = err.message || "Email atau password salah!";
+                errorLabel.classList.remove("hidden-section");
+            } finally {
+                btnLogin.disabled = false;
+                btnLogin.innerText = "Authorize Entry";
+            }
+        }
+
+        async function prosesLogoutAdmin() {
+            await supabaseClient.auth.signOut();
+            tampilkanLoginForm();
+        }
+
+        function tampilkanDashboard(email) {
+            document.getElementById("seksi-login").classList.add("hidden-section");
+            document.getElementById("seksi-dashboard").classList.remove("hidden-section");
+            document.getElementById("label-admin-email").innerText = email;
+            muatTabelLukisan();
+        }
+
+        function tampilkanLoginForm() {
+            document.getElementById("seksi-login").classList.remove("hidden-section");
+            document.getElementById("seksi-dashboard").classList.add("hidden-section");
+        }
+
+        async function muatTabelLukisan() {
+            const tbody = document.getElementById("tabel-list-lukisan");
+            tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">Memuat data lewat Secure Bridge...</td></tr>`;
+
+            try {
+                const respon = await fetch('/api/ambil-data');
+                const hasil = await respon.json();
+
+                if (!hasil.lukisan || hasil.lukisan.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">Belum ada koleksi lukisan.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = "";
+                hasil.lukisan.forEach(lukisan => {
+                    const tr = document.createElement("tr");
+                    tr.className = "hover:bg-white/5 transition-colors duration-150";
+                    tr.innerHTML = `
+                        <td class="py-4 flex items-center gap-3 pr-2">
+                            <img src="${lukisan.media}" class="w-10 h-10 object-cover rounded-xl border border-white/10 shrink-0">
+                            <div>
+                                <div class="font-bold text-white max-w-[150px] truncate">${lukisan.judul}</div>
+                                <div class="text-[10px] text-slate-500 font-mono">${lukisan.ukuran} | <span class="${lukisan.status==='Tersedia'?'text-emerald-400':'text-red-400'}">${lukisan.status}</span></div>
+                            </div>
+                        </td>
+                        <td class="py-4 text-slate-300 font-medium">${lukisan.kategori}</td>
+                        <td class="py-4 font-mono text-amber-400 font-bold">Rp ${parseFloat(lukisan.harga).toLocaleString('id-ID')}</td>
+                        <td class="py-4 text-center">${lukisan.is_featured ? '⭐' : '—'}</td>
+                        <td class="py-4 text-right space-x-1">
+                            <button onclick='isiFormUbah(${JSON.stringify(lukisan)})' class="bg-white/5 border border-white/10 text-white hover:border-amber-500 hover:bg-amber-500 hover:text-slate-950 px-2.5 py-1.5 rounded-lg font-bold transition-all duration-200 cursor-pointer">Ubah</button>
+                            <button onclick="hapusLukisan(${lukisan.id})" class="bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-2.5 py-1.5 rounded-lg font-bold transition-all duration-200 cursor-pointer">Hapus</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-red-400 italic">Gagal memuat katalog database.</td></tr>`;
+            }
+        }
+
+        async function simpanDataLukisan(e) {
+            e.preventDefault();
+            const id = document.getElementById("lukisan-id").value;
+            
+            const payload = {
+                judul: document.getElementById("form-judul").value,
+                kategori: document.getElementById("form-kategori").value,
+                status: document.getElementById("form-status").value,
+                ukuran: document.getElementById("form-ukuran").value,
+                harga: parseFloat(document.getElementById("form-harga").value),
+                media: document.getElementById("form-media").value,
+                deskripsi: document.getElementById("form-deskripsi").value,
+                is_featured: document.getElementById("form-featured").checked
+            };
+            if(id) payload.id = id;
+
+            const token = await ambilToken();
+            const res = await fetch('/api/kelola-lukisan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const hasil = await res.json();
+            if(hasil.success) {
+                bersihkanForm();
+                muatTabelLukisan();
+            } else {
+                alert("Gagal memproses: " + hasil.error);
+            }
+        }
+
+        async function hapusLukisan(id) {
+            if (confirm("Hapus karya seni ini dari katalog?")) {
+                const token = await ambilToken();
+                const res = await fetch(`/api/kelola-lukisan?id=${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const hasil = await res.json();
+                if(hasil.success) muatTabelLukisan();
+                else alert("Gagal menghapus: " + hasil.error);
+            }
+        }
+
+        function isiFormUbah(lukisan) {
+            document.getElementById("lukisan-id").value = lukisan.id;
+            document.getElementById("form-judul").value = lukisan.judul;
+            document.getElementById("form-kategori").value = lukisan.kategori;
+            document.getElementById("form-status").value = lukisan.status;
+            document.getElementById("form-ukuran").value = lukisan.ukuran;
+            document.getElementById("form-harga").value = lukisan.harga;
+            document.getElementById("form-media").value = lukisan.media;
+            document.getElementById("form-deskripsi").value = lukisan.deskripsi || '';
+            document.getElementById("form-featured").checked = lukisan.is_featured;
+        }
+
+        function bersihkanForm() {
+            document.getElementById("form-lukisan").reset();
+            document.getElementById("lukisan-id").value = "";
+        }
+
+        window.addEventListener("DOMContentLoaded", cekStatusOtentikasi);
+    </script>
+</body>
+</html>
