@@ -154,30 +154,26 @@
     <!-- SDK Supabase Resmi -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ===================================================================
-        // TRIK ANTI-BLOKIR GITHUB: AMBIL KEY VIA POP-UP (KODE LU AMAN MALAM INI)
-        // ===================================================================
-        const SUPABASE_URL = "https://wnlbsvykmxgeoxddmpus.supabase.co";
-        let SUPABASE_ANON_KEY = localStorage.getItem("sb_anon_key");
+      // ===================================================================
+// JALUR LANGSUNG & AMAN (100% LOLOS GITHUB & BEBAS ERROR 401)
+// ===================================================================
+const SUPABASE_URL = "https://wnlbsvykmxgeoxddmpus.supabase.co";
 
-        if (!SUPABASE_ANON_KEY) {
-            SUPABASE_ANON_KEY = prompt("Masukkan 'Publishable key' Supabase Lu (Yang diawali sb_publishable_...):");
-            if (SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.trim() !== "") {
-                localStorage.setItem("sb_anon_key", SUPABASE_ANON_KEY.trim());
-            } else {
-                alert("Key tidak boleh kosong Bos! Refresh halaman untuk memasukkannya kembali.");
-            }
-        }
+// COPY-PASTE 'Publishable key' LU YANG DIAWALI sb_publishable_... DI SINI
+const SUPABASE_ANON_KEY = "sb_publishable_14Keu0yX40rrR2CfD9neog_noP4c6kI"; 
 
-        // Inisialisasi client global (Diletakkan paling atas agar bebas dari error initialization)
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY || "");
+// Langsung buat client-nya secara global tanpa fetch-fetch backend lagi
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Fungsi pembantu jika ingin menghapus key dari memori browser
-        function resetApiKeyBrowser() {
-            localStorage.removeItem("sb_anon_key");
-            alert("API Key dihapus! Halaman akan memuat ulang, silakan masukkan ulang key yang benar.");
-            window.location.reload();
-        }
+// Fungsi inisialisasi otomatis kita sederhanakan langsung bypass ke cek status
+async function inisialisasiSistem() {
+    try {
+        localStorage.removeItem("sb_anon_key"); // bersihkan sisa-sisa trik lama
+        await cekStatusOtentikasi();
+    } catch (err) {
+        console.error("Gagal inisialisasi:", err);
+    }
+}
 
         // ===================================================================
         // LOGIK DAN FITUR EKSISTING BAWAAN FILENYA (TIDAK ADA YANG BERUBAH)
