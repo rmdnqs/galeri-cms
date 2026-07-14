@@ -135,7 +135,7 @@
                         <textarea id="input-deskripsi" rows="3" placeholder="Tuliskan deskripsi narasi atau filosofi dari lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
                     </div>
 
-                    <div class="p-4 bg-slate-950 border border-slate-850 rounded-xl space-y-3">
+                    <div class="p-4 bg-slate-950 border border-slate-855 rounded-xl space-y-3">
                         <span class="block text-xs font-bold uppercase tracking-widest text-amber-500">Kategori Konten</span>
                         <div class="flex flex-col gap-2.5">
                             <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
@@ -160,13 +160,13 @@
                 </form>
             </div>
 
-            <!-- MODUL BRANDING & WARNA -->
+            <!-- MODUL BRANDING, PROFIL & WA (TERINTEGRASI) -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
                 <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
-                    <span>🎨</span> Kontrol Warna & Branding Web
+                    <span>🎨</span> Profil Pelukis & Branding Web
                 </h2>
                 <div class="space-y-4">
-                    <!-- PREVIEW LOGO & FILE UPLOAD MECHANISM -->
+                    <!-- PREVIEW LOGO & FILE UPLOAD -->
                     <div class="space-y-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Image Logo Galeri</label>
                         <div class="flex items-center gap-4 bg-slate-950 p-3 rounded-xl border border-slate-850">
@@ -176,10 +176,10 @@
                             </div>
                             <div class="flex-1">
                                 <input type="file" id="theme-logo" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
-                                <p class="text-[9px] text-slate-500 mt-1 italic">*Upload file baru untuk mengganti logo.</p>
                             </div>
                         </div>
                     </div>
+                    
                     <div class="space-y-1.5">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nama Utama Galeri</label>
                         <input type="text" id="theme-nama" placeholder="Masukkan nama galeri..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
@@ -188,8 +188,39 @@
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Deskripsi Utama Hero</label>
                         <textarea id="theme-deskripsi-hero" rows="2" placeholder="Slogan galeri..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
                     </div>
+
+                    <!-- SEKSI WA & PROFIL BARU -->
+                    <div class="pt-4 border-t border-slate-850 space-y-4">
+                        <span class="block text-xs font-extrabold uppercase tracking-widest text-amber-500">👤 Data Pelukis & Kontak</span>
+                        
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nomor WhatsApp Admin (Kontak)</label>
+                            <input type="text" id="theme-wa" placeholder="Contoh: 6281234567890" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:outline-none focus:border-amber-500 transition-all">
+                            <p class="text-[9px] text-slate-500 italic">*Gunakan kode negara (62), jangan pakai spasi atau tanda hubung.</p>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Biografi / Profil Pelukis</label>
+                            <textarea id="theme-deskripsi-pelukis" rows="3" placeholder="Tulis biografi singkat sang pelukis di sini..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
+                        </div>
+
+                        <!-- FOTO PROFIL PELUKIS -->
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Foto Profil Pelukis</label>
+                            <div class="flex items-center gap-4 bg-slate-950 p-3 rounded-xl border border-slate-850">
+                                <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
+                                    <img id="theme-avatar-preview" src="" alt="Avatar" class="w-full h-full object-cover hidden-section">
+                                    <span id="theme-avatar-placeholder" class="text-slate-600 text-[10px] font-bold">No Image</span>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="file" id="theme-foto-pelukis" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-850">
+                    <!-- PALET WARNA -->
+                    <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-855">
                         <div class="bg-slate-950/50 p-2 rounded-xl border border-slate-850 flex items-center justify-between">
                             <span class="text-xs text-slate-400 pl-1">BG Utama</span>
                             <input type="color" id="theme-bg-utama" value="#0f172a" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
@@ -209,23 +240,23 @@
                     </div>
                     
                     <button id="btn-simpan-tema" onclick="simpanTemaGlobal()" class="w-full bg-slate-800 hover:bg-slate-750 border border-slate-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-all">
-                        Deploy Perubahan Tema Global
+                        Deploy Perubahan Global
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- TABEL INVENTARIS LUKISAN (RESPONSIF MODE: CARD DI HP, TABLE DI PC) -->
+        <!-- TABEL INVENTARIS LUKISAN -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-4 shadow-xl">
             <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
                 <span>📋</span> Daftar Lukisan
             </h2>
             
-            <!-- Tampilan Desktop/Tablet (MD Up) -->
+            <!-- Tampilan Desktop/Tablet -->
             <div class="hidden md:block overflow-x-auto rounded-xl border border-slate-850">
                 <table class="w-full text-left border-collapse text-sm">
                     <thead>
-                        <tr class="bg-slate-950 border-b border-slate-850 text-xs font-bold uppercase tracking-wider text-slate-400">
+                        <tr class="bg-slate-950 border-b border-slate-855 text-xs font-bold uppercase tracking-wider text-slate-400">
                             <th class="p-4 text-center w-20">Foto</th>
                             <th class="p-4">Judul Karya</th>
                             <th class="p-4">Kategori</th>
@@ -241,25 +272,21 @@
                 </table>
             </div>
 
-            <!-- Tampilan Mobile (Kurang dari MD) -->
-            <div id="kartu-list-lukisan-mobile" class="block md:hidden space-y-4">
-                <!-- Data mobile di-inject dari javascript di bawah -->
-            </div>
+            <!-- Tampilan Mobile -->
+            <div id="kartu-list-lukisan-mobile" class="block md:hidden space-y-4"></div>
         </div>
     </div>
 
-    <!-- SDK SUPABASE RESMI -->
+    <!-- SDK SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ===================================================================
-        // 🔑 KONFIGURASI CORE DB (MASUKKAN KUNCI PUBLIK LU DI SINI)
-        // ===================================================================
         const SUPABASE_URL = "https://wnlbsvykmxgeoxddmpus.supabase.co"; 
         const SUPABASE_ANON_KEY = "sb_publishable_14Keu0yX40rrR2CfD9neog_noP4c6kI"; 
 
         const dbCloud = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let dataLukisanAktif = []; 
-        let currentLogoUrl = ""; // Menyimpan URL logo lama/aktif
+        let currentLogoUrl = ""; 
+        let currentFotoPelukisUrl = ""; // Menyimpan URL foto pelukis aktif
 
         function formatRupiah(angka) {
             return 'Rp ' + parseFloat(angka).toLocaleString('id-ID');
@@ -270,8 +297,13 @@
             this.value = nilaiPolos ? parseFloat(nilaiPolos).toLocaleString("id-ID") : "";
         });
 
+        // Filter input WA agar hanya bisa dimasuki angka saja saat diketik
+        document.getElementById("theme-wa").addEventListener("input", function(e) {
+            this.value = this.value.replace(/\D/g, "");
+        });
+
         // ===================================================================
-        // 🔒 SISTEM MANAJEMEN OTENTIKASI KENDALI AKSES
+        // 🔒 MANAJEMEN OTENTIKASI
         // ===================================================================
         async function inisialisasiSistem() {
             localStorage.removeItem("sb_anon_key"); 
@@ -320,15 +352,16 @@
         }
 
         // ===================================================================
-        // 💾 OPERASI CRUD DATA (MENDUKUNG RESPONSIVE RENDER)
+        // 💾 OPERASI CRUD DATA & SINKRONISASI
         // ===================================================================
         async function muatDataAdmin() {
             try {
                 let { data: config } = await dbCloud.from('konfigurasi_web').select('*').eq('id', 1).single();
                 if (config) {
                     currentLogoUrl = config.logo_url || "";
+                    currentFotoPelukisUrl = config.foto_pelukis || "";
                     
-                    // Render pratinjau logo saat ini
+                    // Render pratinjau Logo
                     const imgPreview = document.getElementById("theme-logo-preview");
                     const placeholder = document.getElementById("theme-logo-placeholder");
                     if (currentLogoUrl) {
@@ -341,12 +374,29 @@
                         placeholder.classList.remove("hidden-section");
                     }
 
+                    // Render pratinjau Foto Pelukis
+                    const avatarPreview = document.getElementById("theme-avatar-preview");
+                    const avatarPlaceholder = document.getElementById("theme-avatar-placeholder");
+                    if (currentFotoPelukisUrl) {
+                        avatarPreview.src = currentFotoPelukisUrl;
+                        avatarPreview.classList.remove("hidden-section");
+                        avatarPlaceholder.classList.add("hidden-section");
+                    } else {
+                        avatarPreview.src = "";
+                        avatarPreview.classList.add("hidden-section");
+                        avatarPlaceholder.classList.remove("hidden-section");
+                    }
+
                     document.getElementById("theme-nama").value = config.nama_galeri || "";
                     document.getElementById("theme-deskripsi-hero").value = config.deskripsi_hero || "";
                     document.getElementById("theme-bg-utama").value = config.warna_bg_utama || "#0f172a";
                     document.getElementById("theme-bg-komponen").value = config.warna_bg_komponen || "#1e293b";
                     document.getElementById("theme-aksen").value = config.warna_aksen || "#f59e0b";
                     document.getElementById("theme-teks").value = config.warna_teks_utama || "#ffffff";
+                    
+                    // Set Data Profil & WA Baru
+                    document.getElementById("theme-wa").value = config.nomor_wa || "";
+                    document.getElementById("theme-deskripsi-pelukis").value = config.deskripsi_pelukis || "";
                 }
 
                 let { data: list, error } = await dbCloud.from('lukisan').select('*').order('created_at', { ascending: false });
@@ -365,7 +415,6 @@
                             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' 
                             : (item.status === 'Terjual' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400');
 
-                        // 1. Render versi Tabel Desktop
                         tbody.insertAdjacentHTML('beforeend', `
                             <tr class="hover:bg-slate-950/40 transition-colors group">
                                 <td class="p-4 flex justify-center">
@@ -387,7 +436,6 @@
                             </tr>
                         `);
 
-                        // 2. Render versi Card Mobile
                         containerMobile.insertAdjacentHTML('beforeend', `
                             <div class="bg-slate-950/40 border border-slate-850 p-4 rounded-xl space-y-3">
                                 <div class="flex gap-3 items-center">
@@ -530,18 +578,23 @@
             }
         }
 
+        // ===================================================================
+        // 🎨 OPERASI DEPLOY TEMA, PROFIL & WHATSAPP DYNAMIC
+        // ===================================================================
         async function simpanTemaGlobal() {
             const btnTema = document.getElementById("btn-simpan-tema");
-            btnTema.innerText = "DEPLOYING TEMA..."; btnTema.disabled = true;
+            btnTema.innerText = "DEPLOYING GLOBAL DATA..."; btnTema.disabled = true;
 
             const logoFile = document.getElementById("theme-logo").files[0];
-            let logoUrl = currentLogoUrl; // Default ke logo saat ini jika tidak upload yang baru
+            const fotoPelukisFile = document.getElementById("theme-foto-pelukis").files[0];
+            
+            let logoUrl = currentLogoUrl; 
+            let fotoPelukisUrl = currentFotoPelukisUrl;
 
             try {
-                // Proses upload logo jika ada file yang dimasukkan admin
+                // 1. Upload Logo jika diganti
                 if (logoFile) {
                     const fileExt = logoFile.name.split('.').pop();
-                    // Folderized di dalam bucket agar rapi (logo/nama_file)
                     const fileName = `logo/${Date.now()}_logo.${fileExt}`;
                     
                     let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, logoFile);
@@ -551,28 +604,47 @@
                     logoUrl = publicUrlData.publicUrl;
                 }
 
+                // 2. Upload Foto Profil Pelukis jika diganti
+                if (fotoPelukisFile) {
+                    const fileExt = fotoPelukisFile.name.split('.').pop();
+                    const fileName = `pelukis/${Date.now()}_pelukis.${fileExt}`;
+                    
+                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fotoPelukisFile);
+                    if (uploadError) throw uploadError;
+
+                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
+                    fotoPelukisUrl = publicUrlData.publicUrl;
+                }
+
+                // 3. Upsert ke tabel konfigurasi_web
                 const { error } = await dbCloud.from('konfigurasi_web').upsert({ 
                     id: 1, 
                     logo_url: logoUrl, 
+                    foto_pelukis: fotoPelukisUrl,
                     nama_galeri: document.getElementById("theme-nama").value,
                     deskripsi_hero: document.getElementById("theme-deskripsi-hero").value, 
                     warna_bg_utama: document.getElementById("theme-bg-utama").value,
                     warna_bg_komponen: document.getElementById("theme-bg-komponen").value, 
                     warna_aksen: document.getElementById("theme-aksen").value,
                     warna_teks_utama: document.getElementById("theme-teks").value, 
+                    
+                    // Value baru untuk Profil & WA
+                    nomor_wa: document.getElementById("theme-wa").value,
+                    deskripsi_pelukis: document.getElementById("theme-deskripsi-pelukis").value,
                     updated_at: new Date()
                 });
                 if (error) throw error;
                 
-                // Clear input file setelah sukses
+                // Reset input file agar siap jika ada perubahan berikutnya
                 document.getElementById("theme-logo").value = "";
+                document.getElementById("theme-foto-pelukis").value = "";
                 
-                alert("Tema berhasil di-deploy!");
-                await muatDataAdmin(); // Refresh data dan pratinjau logo baru
+                alert("Branding, Profil Pelukis & Kontak berhasil dideploy!");
+                await muatDataAdmin(); 
             } catch (err) {
-                alert("Gagal deploy tema: " + err.message);
+                alert("Gagal deploy konfigurasi: " + err.message);
             } finally {
-                btnTema.innerText = "Deploy Perubahan Tema Global"; btnTema.disabled = false;
+                btnTema.innerText = "Deploy Perubahan Global"; btnTema.disabled = false;
             }
         }
 
