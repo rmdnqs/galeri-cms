@@ -68,6 +68,9 @@
 
         <!-- NAVIGASI MENU CMS (TAB SYSTEM) -->
         <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-2">
+            <button onclick="gantiTabCms('dashboard')" id="btn-tab-dashboard" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                📊 Dashboard
+            </button>
             <button onclick="gantiTabCms('inventaris')" id="btn-tab-inventaris" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
                 📦 Inventaris & Lukisan
             </button>
@@ -77,6 +80,67 @@
             <button onclick="gantiTabCms('profil-kontak')" id="btn-tab-profil-kontak" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
                 👤 Profil & Kontak WA
             </button>
+        </div>
+
+        <!-- TAB CONTENT 0: DASHBOARD STATISTIK -->
+        <div id="tab-dashboard" class="tab-content space-y-6">
+            <!-- WIDGET CARD ANALYTICS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- TOTAL PENGUNJUNG -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex items-center justify-between shadow-xl relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 text-slate-800/10 text-8xl font-black select-none pointer-events-none group-hover:scale-110 transition-all">VISIT</div>
+                    <div class="space-y-2 relative z-10">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block">Total Pengunjung Web</span>
+                        <h3 id="stat-pengunjung" class="text-3xl sm:text-4xl font-extrabold text-blue-400 font-mono">0</h3>
+                        <p class="text-[10px] text-slate-500">Jumlah kumulatif kunjungan unik/halaman utama</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-xl text-blue-400 shadow-lg shadow-blue-500/5 relative z-10">
+                        👥
+                    </div>
+                </div>
+
+                <!-- TOTAL HIT WHATSAPP -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex items-center justify-between shadow-xl relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 text-slate-800/10 text-8xl font-black select-none pointer-events-none group-hover:scale-110 transition-all">CHAT</div>
+                    <div class="space-y-2 relative z-10">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block">Klik Chat WhatsApp</span>
+                        <h3 id="stat-klik-wa" class="text-3xl sm:text-4xl font-extrabold text-emerald-400 font-mono">0</h3>
+                        <p class="text-[10px] text-slate-500">Jumlah pengguna menekan tombol negosiasi WA</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-xl text-emerald-400 shadow-lg shadow-emerald-500/5 relative z-10">
+                        💬
+                    </div>
+                </div>
+
+                <!-- TOTAL LUKISAN DALAM DATABASE -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex items-center justify-between shadow-xl relative overflow-hidden group sm:col-span-2 lg:col-span-1">
+                    <div class="absolute -right-4 -bottom-4 text-slate-800/10 text-8xl font-black select-none pointer-events-none group-hover:scale-110 transition-all">ART</div>
+                    <div class="space-y-2 relative z-10">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block">Total Koleksi Lukisan</span>
+                        <h3 id="stat-total-lukisan" class="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono">0</h3>
+                        <p class="text-[10px] text-slate-500">Jumlah karya seni yang terdaftar di sistem</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl text-amber-400 shadow-lg shadow-amber-500/5 relative z-10">
+                        🖼️
+                    </div>
+                </div>
+            </div>
+
+            <!-- WELCOME & QUICK LINK INFO -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-4 shadow-xl">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">🚀 Selamat Datang di Pusat Kendali Galeri</h3>
+                <p class="text-sm text-slate-400 leading-relaxed max-w-3xl">
+                    Melalui dashboard ini, Anda bisa melihat perkembangan interaksi audiens Anda. Gunakan navigasi tab di atas untuk mengelola lukisan Anda secara dinamis, mengonfigurasi palet warna antarmuka website utama, atau memperbarui informasi kontak bisnis WhatsApp Anda.
+                </p>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <button onclick="gantiTabCms('inventaris')" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl text-slate-300 transition-all cursor-pointer">
+                        📦 Kelola Lukisan
+                    </button>
+                    <button onclick="gantiTabCms('branding')" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl text-slate-300 transition-all cursor-pointer">
+                        🎨 Ubah Warna & Logo
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- TAB CONTENT 1: INVENTARIS LUKISAN -->
@@ -213,7 +277,7 @@
                 <div class="space-y-6">
                     <div class="space-y-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Image Logo Galeri</label>
-                        <div class="flex items-center gap-4 bg-slate-950 p-4 rounded-xl border border-slate-850">
+                        <div class="flex items-center gap-4 bg-slate-950 p-4 rounded-xl border border-slate-855">
                             <div class="w-16 h-16 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0">
                                 <img id="theme-logo-preview" src="" alt="Logo" class="w-full h-full object-contain hidden-section">
                                 <span id="theme-logo-placeholder" class="text-slate-600 text-[10px] font-bold">No Logo</span>
@@ -242,15 +306,15 @@
                                 <span class="text-xs text-slate-400 pl-1">BG Utama</span>
                                 <input type="color" id="theme-bg-utama" value="#0f172a" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
                             </div>
-                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-855 flex items-center justify-between">
                                 <span class="text-xs text-slate-400 pl-1">BG Card</span>
                                 <input type="color" id="theme-bg-komponen" value="#1e293b" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
                             </div>
-                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-855 flex items-center justify-between">
                                 <span class="text-xs text-slate-400 pl-1">Aksen</span>
                                 <input type="color" id="theme-aksen" value="#f59e0b" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
                             </div>
-                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-855 flex items-center justify-between">
                                 <span class="text-xs text-slate-400 pl-1">Teks Utama</span>
                                 <input type="color" id="theme-teks" value="#ffffff" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
                             </div>
@@ -286,7 +350,7 @@
                     <!-- FOTO PROFIL PELUKIS -->
                     <div class="space-y-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Foto Profil Pelukis</label>
-                        <div class="flex items-center gap-4 bg-slate-950 p-4 rounded-xl border border-slate-850">
+                        <div class="flex items-center gap-4 bg-slate-950 p-4 rounded-xl border border-slate-855">
                             <div class="w-16 h-16 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
                                 <img id="theme-avatar-preview" src="" alt="Avatar" class="w-full h-full object-cover hidden-section">
                                 <span id="theme-avatar-placeholder" class="text-slate-600 text-[10px] font-bold">No Image</span>
@@ -326,7 +390,6 @@
             this.value = nilaiPolos ? parseFloat(nilaiPolos).toLocaleString("id-ID") : "";
         });
 
-        // Filter input WA agar hanya bisa dimasuki angka saja saat diketik
         document.getElementById("theme-wa").addEventListener("input", function(e) {
             this.value = this.value.replace(/\D/g, "");
         });
@@ -339,6 +402,7 @@
             document.getElementById(`tab-${tabName}`).classList.add('active');
 
             const menuButtons = [
+                { id: 'btn-tab-dashboard', key: 'dashboard' },
                 { id: 'btn-tab-inventaris', key: 'inventaris' },
                 { id: 'btn-tab-branding', key: 'branding' },
                 { id: 'btn-tab-profil-kontak', key: 'profil-kontak' }
@@ -347,9 +411,9 @@
             menuButtons.forEach(btnInfo => {
                 const btn = document.getElementById(btnInfo.id);
                 if (btnInfo.key === tabName) {
-                    btn.className = "px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/10";
+                    btn.className = "px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/10 cursor-pointer";
                 } else {
-                    btn.className = "px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700";
+                    btn.className = "px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 cursor-pointer";
                 }
             });
         }
@@ -367,7 +431,7 @@
             if (session && session.user) {
                 document.getElementById("seksi-login").classList.add("hidden-section");
                 document.getElementById("seksi-workspace").classList.remove("hidden-section");
-                gantiTabCms('inventaris'); // Set tab default setelah login
+                gantiTabCms('dashboard'); // Set default ke Dashboard setelah Login
                 muatDataAdmin();
             } else {
                 document.getElementById("seksi-workspace").classList.add("hidden-section");
@@ -414,6 +478,10 @@
                     currentLogoUrl = config.logo_url || "";
                     currentFotoPelukisUrl = config.foto_pelukis || "";
                     
+                    // Render data analitik ke dashboard
+                    document.getElementById("stat-pengunjung").innerText = (config.total_pengunjung || 0).toLocaleString('id-ID');
+                    document.getElementById("stat-klik-wa").innerText = (config.total_klik_wa || 0).toLocaleString('id-ID');
+
                     // Render pratinjau Logo
                     const imgPreview = document.getElementById("theme-logo-preview");
                     const placeholder = document.getElementById("theme-logo-placeholder");
@@ -455,6 +523,10 @@
                 if (error) throw error;
                 
                 dataLukisanAktif = list || [];
+                
+                // Render total jumlah lukisan ke dashboard
+                document.getElementById("stat-total-lukisan").innerText = dataLukisanAktif.length.toLocaleString('id-ID');
+
                 const tbody = document.getElementById("tabel-list-lukisan");
                 const containerMobile = document.getElementById("kartu-list-lukisan-mobile");
                 
@@ -593,6 +665,8 @@
         function pemicuEditKarya(id) {
             const lukisan = dataLukisanAktif.find(item => item.id === id);
             if (!lukisan) return;
+
+            gantiTabCms('inventaris'); // Pindah ke tab inventaris otomatis
 
             document.getElementById("input-id-lukisan").value = lukisan.id;
             document.getElementById("input-judul").value = lukisan.judul;
