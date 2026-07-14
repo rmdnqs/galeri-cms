@@ -11,6 +11,8 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .hidden-section { display: none !important; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen p-4 sm:p-8 md:p-12 antialiased">
@@ -64,217 +66,244 @@
             </div>
         </div>
 
-        <!-- GRID INTERFACE -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:grid-cols-1 md:gap-8 items-start">
-            
-            <!-- MODUL INVENTARIS FORM -->
-            <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
-                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
-                    <span>📦</span> Modul Inventaris Lukisan
-                </h2>
-                
-                <form id="form-cms" onsubmit="simpanDataLukisan(event)" class="space-y-5">
-                    <!-- ID Tersembunyi untuk Mode Edit -->
-                    <input type="hidden" id="input-id-lukisan">
+        <!-- NAVIGASI MENU CMS (TAB SYSTEM) -->
+        <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-2">
+            <button onclick="gantiTabCms('inventaris')" id="btn-tab-inventaris" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                📦 Inventaris & Lukisan
+            </button>
+            <button onclick="gantiTabCms('branding')" id="btn-tab-branding" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                🎨 Identitas & Branding
+            </button>
+            <button onclick="gantiTabCms('profil-kontak')" id="btn-tab-profil-kontak" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                👤 Profil & Kontak WA
+            </button>
+        </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Judul Karya</label>
-                            <input type="text" id="input-judul" required placeholder="Masukkan judul lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Harga Karya (Rp)</label>
-                            <input type="text" id="input-harga" required placeholder="Contoh: 7.500.000" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
-                        </div>
-                    </div>
+        <!-- TAB CONTENT 1: INVENTARIS LUKISAN -->
+        <div id="tab-inventaris" class="tab-content space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:grid-cols-1 md:gap-8 items-start">
+                <!-- FORM INVENTARIS -->
+                <div class="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                    <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                        <span id="judul-form-inventaris">➕ Tambah Karya Lukisan Baru</span>
+                    </h2>
+                    
+                    <form id="form-cms" onsubmit="simpanDataLukisan(event)" class="space-y-5">
+                        <input type="hidden" id="input-id-lukisan">
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Kategori Kurasi Seni</label>
-                            <select id="input-kategori" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
-                                <option value="Abstrak">Abstrak</option>
-                                <option value="Realisme">Realisme</option>
-                                <option value="Lanskap">Lanskap</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Judul Karya</label>
+                                <input type="text" id="input-judul" required placeholder="Masukkan judul lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Harga Karya (Rp)</label>
+                                <input type="text" id="input-harga" required placeholder="Contoh: 7.500.000" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                            </div>
                         </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Ukuran Lukisan</label>
-                            <input type="text" id="input-ukuran" required placeholder="Misal: 120 x 90 cm" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Status Karya</label>
-                            <select id="input-status" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
-                                <option value="Tersedia">Tersedia</option>
-                                <option value="Terjual">Terjual</option>
-                                <option value="Dipesan">Dipesan</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Kategori Kurasi Seni</label>
+                                <select id="input-kategori" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
+                                    <option value="Abstrak">Abstrak</option>
+                                    <option value="Realisme">Realisme</option>
+                                    <option value="Lanskap">Lanskap</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Ukuran Lukisan</label>
+                                <input type="text" id="input-ukuran" required placeholder="Misal: 120 x 90 cm" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Status Karya</label>
+                                <select id="input-status" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
+                                    <option value="Tersedia">Tersedia</option>
+                                    <option value="Terjual">Terjual</option>
+                                    <option value="Dipesan">Dipesan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Foto Lukisan</label>
+                                <input type="file" id="input-file-foto" accept="image/*" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-2 text-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                                <p id="info-file-edit" class="text-[10px] text-slate-500 italic mt-1 hidden-section">*Kosongkan jika tidak ingin mengganti foto yang sudah ada.</p>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Gaya Gradient Kartu</label>
+                                <select id="input-gradient" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
+                                    <option value="from-amber-500/20 to-transparent">Amber Gradient Warm</option>
+                                    <option value="from-blue-500/20 to-transparent">Blue Sapphire Cool</option>
+                                    <option value="from-emerald-500/20 to-transparent">Emerald Nature Green</option>
+                                    <option value="from-purple-500/20 to-transparent">Royal Purple Velvet</option>
+                                    <option value="from-slate-800/50 to-transparent">Minimalist Slate Muted</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Foto Lukisan</label>
-                            <input type="file" id="input-file-foto" accept="image/*" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-2 text-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
-                            <p id="info-file-edit" class="text-[10px] text-slate-500 italic mt-1 hidden-section">*Kosongkan jika tidak ingin mengganti foto yang sudah ada.</p>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Deskripsi Narasi Karya</label>
+                            <textarea id="input-deskripsi" rows="3" placeholder="Tuliskan deskripsi narasi atau filosofi dari lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
                         </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Gaya Gradient Kartu</label>
-                            <select id="input-gradient" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
-                                <option value="from-amber-500/20 to-transparent">Amber Gradient Warm</option>
-                                <option value="from-blue-500/20 to-transparent">Blue Sapphire Cool</option>
-                                <option value="from-emerald-500/20 to-transparent">Emerald Nature Green</option>
-                                <option value="from-purple-500/20 to-transparent">Royal Purple Velvet</option>
-                                <option value="from-slate-800/50 to-transparent">Minimalist Slate Muted</option>
-                            </select>
+
+                        <div class="p-4 bg-slate-950 border border-slate-855 rounded-xl space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-widest text-amber-500">Kategori Konten</span>
+                            <div class="flex flex-col gap-2.5">
+                                <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
+                                    <input type="checkbox" id="input-featured" class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
+                                    <span class="text-slate-300">Publish ke Halaman Utama (Featured)</span>
+                                </label>
+                                <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
+                                    <input type="checkbox" id="input-archive" checked class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
+                                    <span class="text-slate-300">Publish ke Menu Koleksi (Arsip Katalog)</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="space-y-2">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Deskripsi Narasi Karya</label>
-                        <textarea id="input-deskripsi" rows="3" placeholder="Tuliskan deskripsi narasi atau filosofi dari lukisan..." class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
-                    </div>
-
-                    <div class="p-4 bg-slate-950 border border-slate-855 rounded-xl space-y-3">
-                        <span class="block text-xs font-bold uppercase tracking-widest text-amber-500">Kategori Konten</span>
-                        <div class="flex flex-col gap-2.5">
-                            <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
-                                <input type="checkbox" id="input-featured" class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
-                                <span class="text-slate-300">Publish ke Halaman Utama (Featured)</span>
-                            </label>
-                            <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
-                                <input type="checkbox" id="input-archive" checked class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
-                                <span class="text-slate-300">Publish ke Menu Koleksi (Arsip Katalog)</span>
-                            </label>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button type="submit" id="btn-submit-karya" class="w-full sm:flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 rounded-xl transition-all tracking-wider uppercase text-xs cursor-pointer shadow-lg shadow-amber-500/10">
+                                Simpan Data
+                            </button>
+                            <button type="button" id="btn-batal-edit" onclick="bersihkanFormKarya()" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-750 text-slate-400 hover:text-white px-5 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider border border-slate-700 transition-all cursor-pointer hidden-section">
+                                Batal / Form Baru
+                            </button>
                         </div>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button type="submit" id="btn-submit-karya" class="w-full sm:flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 rounded-xl transition-all tracking-wider uppercase text-xs cursor-pointer shadow-lg shadow-amber-500/10">
-                            Simpan Data
-                        </button>
-                        <button type="button" id="btn-batal-edit" onclick="bersihkanFormKarya()" class="w-full sm:w-auto bg-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white px-5 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider border border-slate-800 transition-all cursor-pointer hidden-section">
-                            Batal
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
 
-            <!-- MODUL BRANDING, PROFIL & WA (TERINTEGRASI) -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+            <!-- TABEL INVENTARIS LUKISAN -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-4 shadow-xl">
                 <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
-                    <span>🎨</span> Profil Pelukis & Branding Web
+                    <span>📋</span> Daftar Lukisan Terdaftar
                 </h2>
-                <div class="space-y-4">
-                    <!-- PREVIEW LOGO & FILE UPLOAD -->
+                
+                <div class="hidden md:block overflow-x-auto rounded-xl border border-slate-850">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-950 border-b border-slate-855 text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <th class="p-4 text-center w-20">Foto</th>
+                                <th class="p-4">Judul Karya</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4">Ukuran</th>
+                                <th class="p-4">Harga</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4 text-center w-40">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-list-lukisan" class="divide-y divide-slate-850 bg-slate-900/40">
+                            <tr><td colspan="7" class="p-8 text-center text-slate-500 italic">Menghubungkan core database...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="kartu-list-lukisan-mobile" class="block md:hidden space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 2: BRANDING & IDENTITAS GALERI -->
+        <div id="tab-branding" class="tab-content">
+            <div class="max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                    <span>🎨</span> Identitas Visual & Branding Web
+                </h2>
+                
+                <div class="space-y-6">
                     <div class="space-y-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Image Logo Galeri</label>
-                        <div class="flex items-center gap-4 bg-slate-950 p-3 rounded-xl border border-slate-850">
-                            <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <div class="flex items-center gap-4 bg-slate-950 p-4 rounded-xl border border-slate-850">
+                            <div class="w-16 h-16 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0">
                                 <img id="theme-logo-preview" src="" alt="Logo" class="w-full h-full object-contain hidden-section">
                                 <span id="theme-logo-placeholder" class="text-slate-600 text-[10px] font-bold">No Logo</span>
                             </div>
                             <div class="flex-1">
-                                <input type="file" id="theme-logo" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                                <input type="file" id="theme-logo" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
                             </div>
                         </div>
                     </div>
                     
                     <div class="space-y-1.5">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nama Utama Galeri</label>
-                        <input type="text" id="theme-nama" placeholder="Masukkan nama galeri..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                        <input type="text" id="theme-nama" placeholder="Masukkan nama galeri..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
                     </div>
+                    
                     <div class="space-y-1.5">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Deskripsi Utama Hero</label>
-                        <textarea id="theme-deskripsi-hero" rows="2" placeholder="Slogan galeri..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
+                        <textarea id="theme-deskripsi-hero" rows="3" placeholder="Slogan galeri..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
                     </div>
-
-                    <!-- SEKSI WA & PROFIL BARU -->
-                    <div class="pt-4 border-t border-slate-850 space-y-4">
-                        <span class="block text-xs font-extrabold uppercase tracking-widest text-amber-500">👤 Data Pelukis & Kontak</span>
-                        
-                        <div class="space-y-1.5">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nomor WhatsApp Admin (Kontak)</label>
-                            <input type="text" id="theme-wa" placeholder="Contoh: 6281234567890" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:outline-none focus:border-amber-500 transition-all">
-                            <p class="text-[9px] text-slate-500 italic">*Gunakan kode negara (62), jangan pakai spasi atau tanda hubung.</p>
-                        </div>
-
-                        <div class="space-y-1.5">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Biografi / Profil Pelukis</label>
-                            <textarea id="theme-deskripsi-pelukis" rows="3" placeholder="Tulis biografi singkat sang pelukis di sini..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
-                        </div>
-
-                        <!-- FOTO PROFIL PELUKIS -->
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Foto Profil Pelukis</label>
-                            <div class="flex items-center gap-4 bg-slate-950 p-3 rounded-xl border border-slate-850">
-                                <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
-                                    <img id="theme-avatar-preview" src="" alt="Avatar" class="w-full h-full object-cover hidden-section">
-                                    <span id="theme-avatar-placeholder" class="text-slate-600 text-[10px] font-bold">No Image</span>
-                                </div>
-                                <div class="flex-1">
-                                    <input type="file" id="theme-foto-pelukis" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
-                                </div>
+                    
+                    <!-- PALET WARNA -->
+                    <div class="space-y-3 pt-4 border-t border-slate-800">
+                        <span class="block text-xs font-bold uppercase tracking-widest text-amber-500">Palet Warna Interface Web</span>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                                <span class="text-xs text-slate-400 pl-1">BG Utama</span>
+                                <input type="color" id="theme-bg-utama" value="#0f172a" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
+                            </div>
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                                <span class="text-xs text-slate-400 pl-1">BG Card</span>
+                                <input type="color" id="theme-bg-komponen" value="#1e293b" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
+                            </div>
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                                <span class="text-xs text-slate-400 pl-1">Aksen</span>
+                                <input type="color" id="theme-aksen" value="#f59e0b" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
+                            </div>
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                                <span class="text-xs text-slate-400 pl-1">Teks Utama</span>
+                                <input type="color" id="theme-teks" value="#ffffff" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
                             </div>
                         </div>
                     </div>
                     
-                    <!-- PALET WARNA -->
-                    <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-855">
-                        <div class="bg-slate-950/50 p-2 rounded-xl border border-slate-850 flex items-center justify-between">
-                            <span class="text-xs text-slate-400 pl-1">BG Utama</span>
-                            <input type="color" id="theme-bg-utama" value="#0f172a" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
-                        </div>
-                        <div class="bg-slate-950/50 p-2 rounded-xl border border-slate-850 flex items-center justify-between">
-                            <span class="text-xs text-slate-400 pl-1">BG Card</span>
-                            <input type="color" id="theme-bg-komponen" value="#1e293b" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
-                        </div>
-                        <div class="bg-slate-950/50 p-2 rounded-xl border border-slate-850 flex items-center justify-between">
-                            <span class="text-xs text-slate-400 pl-1">Aksen</span>
-                            <input type="color" id="theme-aksen" value="#f59e0b" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
-                        </div>
-                        <div class="bg-slate-950/50 p-2 rounded-xl border border-slate-850 flex items-center justify-between">
-                            <span class="text-xs text-slate-400 pl-1">Teks</span>
-                            <input type="color" id="theme-teks" value="#ffffff" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
-                        </div>
-                    </div>
-                    
-                    <button id="btn-simpan-tema" onclick="simpanTemaGlobal()" class="w-full bg-slate-800 hover:bg-slate-750 border border-slate-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-all">
-                        Deploy Perubahan Global
+                    <button id="btn-simpan-tema" onclick="simpanTemaGlobal()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-all shadow-lg shadow-amber-500/10">
+                        Deploy Perubahan Branding
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- TABEL INVENTARIS LUKISAN -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-4 shadow-xl">
-            <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
-                <span>📋</span> Daftar Lukisan
-            </h2>
-            
-            <!-- Tampilan Desktop/Tablet -->
-            <div class="hidden md:block overflow-x-auto rounded-xl border border-slate-850">
-                <table class="w-full text-left border-collapse text-sm">
-                    <thead>
-                        <tr class="bg-slate-950 border-b border-slate-855 text-xs font-bold uppercase tracking-wider text-slate-400">
-                            <th class="p-4 text-center w-20">Foto</th>
-                            <th class="p-4">Judul Karya</th>
-                            <th class="p-4">Kategori</th>
-                            <th class="p-4">Ukuran</th>
-                            <th class="p-4">Harga</th>
-                            <th class="p-4">Status</th>
-                            <th class="p-4 text-center w-40">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabel-list-lukisan" class="divide-y divide-slate-850 bg-slate-900/40">
-                        <tr><td colspan="7" class="p-8 text-center text-slate-500 italic">Menghubungkan core database...</td></tr>
-                    </tbody>
-                </table>
-            </div>
+        <!-- TAB CONTENT 3: PROFIL PELUKIS & KONTAK WA -->
+        <div id="tab-profil-kontak" class="tab-content">
+            <div class="max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                    <span>👤</span> Profil Pelukis & Kontak Pelanggan
+                </h2>
+                
+                <div class="space-y-6">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nomor WhatsApp Admin (Kontak)</label>
+                        <input type="text" id="theme-wa" placeholder="Contoh: 085896246875 atau 6285896246875" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white font-mono text-sm focus:outline-none focus:border-amber-500 transition-all">
+                        <p class="text-[10px] text-slate-500 italic">*Format otomatis dirapikan. Bisa diawali angka 0 atau 62.</p>
+                    </div>
 
-            <!-- Tampilan Mobile -->
-            <div id="kartu-list-lukisan-mobile" class="block md:hidden space-y-4"></div>
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Biografi / Profil Pelukis</label>
+                        <textarea id="theme-deskripsi-pelukis" rows="5" placeholder="Tulis biografi singkat sang pelukis di sini..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all"></textarea>
+                    </div>
+
+                    <!-- FOTO PROFIL PELUKIS -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Foto Profil Pelukis</label>
+                        <div class="flex items-center gap-4 bg-slate-950 p-4 rounded-xl border border-slate-850">
+                            <div class="w-16 h-16 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
+                                <img id="theme-avatar-preview" src="" alt="Avatar" class="w-full h-full object-cover hidden-section">
+                                <span id="theme-avatar-placeholder" class="text-slate-600 text-[10px] font-bold">No Image</span>
+                            </div>
+                            <div class="flex-1">
+                                <input type="file" id="theme-foto-pelukis" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-simpan-profil" onclick="simpanTemaGlobal()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-all shadow-lg shadow-amber-500/10">
+                        Deploy Perubahan Profil & Kontak
+                    </button>
+                </div>
+            </div>
         </div>
+
     </div>
 
     <!-- SDK SUPABASE -->
@@ -286,7 +315,7 @@
         const dbCloud = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let dataLukisanAktif = []; 
         let currentLogoUrl = ""; 
-        let currentFotoPelukisUrl = ""; // Menyimpan URL foto pelukis aktif
+        let currentFotoPelukisUrl = ""; 
 
         function formatRupiah(angka) {
             return 'Rp ' + parseFloat(angka).toLocaleString('id-ID');
@@ -303,6 +332,29 @@
         });
 
         // ===================================================================
+        // 🗂️ NAVIGASI SISTEM TAB CMS
+        // ===================================================================
+        function gantiTabCms(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            const menuButtons = [
+                { id: 'btn-tab-inventaris', key: 'inventaris' },
+                { id: 'btn-tab-branding', key: 'branding' },
+                { id: 'btn-tab-profil-kontak', key: 'profil-kontak' }
+            ];
+
+            menuButtons.forEach(btnInfo => {
+                const btn = document.getElementById(btnInfo.id);
+                if (btnInfo.key === tabName) {
+                    btn.className = "px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/10";
+                } else {
+                    btn.className = "px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700";
+                }
+            });
+        }
+
+        // ===================================================================
         // 🔒 MANAJEMEN OTENTIKASI
         // ===================================================================
         async function inisialisasiSistem() {
@@ -315,6 +367,7 @@
             if (session && session.user) {
                 document.getElementById("seksi-login").classList.add("hidden-section");
                 document.getElementById("seksi-workspace").classList.remove("hidden-section");
+                gantiTabCms('inventaris'); // Set tab default setelah login
                 muatDataAdmin();
             } else {
                 document.getElementById("seksi-workspace").classList.add("hidden-section");
@@ -394,7 +447,6 @@
                     document.getElementById("theme-aksen").value = config.warna_aksen || "#f59e0b";
                     document.getElementById("theme-teks").value = config.warna_teks_utama || "#ffffff";
                     
-                    // Set Data Profil & WA Baru
                     document.getElementById("theme-wa").value = config.nomor_wa || "";
                     document.getElementById("theme-deskripsi-pelukis").value = config.deskripsi_pelukis || "";
                 }
@@ -557,6 +609,7 @@
             document.getElementById("info-file-edit").classList.remove("hidden-section");
             document.getElementById("btn-batal-edit").classList.remove("hidden-section");
             document.getElementById("btn-submit-karya").innerText = "Simpan Perubahan Aset";
+            document.getElementById("judul-form-inventaris").innerText = `✏️ Edit Lukisan: "${lukisan.judul}"`;
             
             document.getElementById("form-cms").scrollIntoView({ behavior: 'smooth' });
         }
@@ -568,6 +621,7 @@
             document.getElementById("info-file-edit").classList.add("hidden-section");
             document.getElementById("btn-batal-edit").classList.add("hidden-section");
             document.getElementById("btn-submit-karya").innerText = "Simpan Data";
+            document.getElementById("judul-form-inventaris").innerText = "➕ Tambah Karya Lukisan Baru";
         }
 
         async function hapusKarya(id) {
@@ -583,7 +637,10 @@
         // ===================================================================
         async function simpanTemaGlobal() {
             const btnTema = document.getElementById("btn-simpan-tema");
+            const btnProfil = document.getElementById("btn-simpan-profil");
+            
             btnTema.innerText = "DEPLOYING GLOBAL DATA..."; btnTema.disabled = true;
+            btnProfil.innerText = "DEPLOYING GLOBAL DATA..."; btnProfil.disabled = true;
 
             const logoFile = document.getElementById("theme-logo").files[0];
             const fotoPelukisFile = document.getElementById("theme-foto-pelukis").files[0];
@@ -592,11 +649,9 @@
             let fotoPelukisUrl = currentFotoPelukisUrl;
 
             try {
-                // 1. Upload Logo jika diganti
                 if (logoFile) {
                     const fileExt = logoFile.name.split('.').pop();
                     const fileName = `logo/${Date.now()}_logo.${fileExt}`;
-                    
                     let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, logoFile);
                     if (uploadError) throw uploadError;
 
@@ -604,11 +659,9 @@
                     logoUrl = publicUrlData.publicUrl;
                 }
 
-                // 2. Upload Foto Profil Pelukis jika diganti
                 if (fotoPelukisFile) {
                     const fileExt = fotoPelukisFile.name.split('.').pop();
                     const fileName = `pelukis/${Date.now()}_pelukis.${fileExt}`;
-                    
                     let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fotoPelukisFile);
                     if (uploadError) throw uploadError;
 
@@ -616,7 +669,6 @@
                     fotoPelukisUrl = publicUrlData.publicUrl;
                 }
 
-                // 3. Upsert ke tabel konfigurasi_web
                 const { error } = await dbCloud.from('konfigurasi_web').upsert({ 
                     id: 1, 
                     logo_url: logoUrl, 
@@ -627,24 +679,22 @@
                     warna_bg_komponen: document.getElementById("theme-bg-komponen").value, 
                     warna_aksen: document.getElementById("theme-aksen").value,
                     warna_teks_utama: document.getElementById("theme-teks").value, 
-                    
-                    // Value baru untuk Profil & WA
                     nomor_wa: document.getElementById("theme-wa").value,
                     deskripsi_pelukis: document.getElementById("theme-deskripsi-pelukis").value,
                     updated_at: new Date()
                 });
                 if (error) throw error;
                 
-                // Reset input file agar siap jika ada perubahan berikutnya
                 document.getElementById("theme-logo").value = "";
                 document.getElementById("theme-foto-pelukis").value = "";
                 
-                alert("Branding, Profil Pelukis & Kontak berhasil dideploy!");
+                alert("Konfigurasi Web berhasil dideploy secara global!");
                 await muatDataAdmin(); 
             } catch (err) {
                 alert("Gagal deploy konfigurasi: " + err.message);
             } finally {
-                btnTema.innerText = "Deploy Perubahan Global"; btnTema.disabled = false;
+                btnTema.innerText = "Deploy Perubahan Branding"; btnTema.disabled = false;
+                btnProfil.innerText = "Deploy Perubahan Profil & Kontak"; btnProfil.disabled = false;
             }
         }
 
