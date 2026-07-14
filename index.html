@@ -166,9 +166,19 @@
                     <span>🎨</span> Kontrol Warna & Branding Web
                 </h2>
                 <div class="space-y-4">
-                    <div class="space-y-1.5">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">URL Image Logo</label>
-                        <input type="text" id="theme-logo" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                    <!-- PREVIEW LOGO & FILE UPLOAD MECHANISM -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Image Logo Galeri</label>
+                        <div class="flex items-center gap-4 bg-slate-950 p-3 rounded-xl border border-slate-850">
+                            <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+                                <img id="theme-logo-preview" src="" alt="Logo" class="w-full h-full object-contain hidden-section">
+                                <span id="theme-logo-placeholder" class="text-slate-600 text-[10px] font-bold">No Logo</span>
+                            </div>
+                            <div class="flex-1">
+                                <input type="file" id="theme-logo" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                                <p class="text-[9px] text-slate-500 mt-1 italic">*Upload file baru untuk mengganti logo.</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="space-y-1.5">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nama Utama Galeri</label>
@@ -249,6 +259,7 @@
 
         const dbCloud = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let dataLukisanAktif = []; 
+        let currentLogoUrl = ""; // Menyimpan URL logo lama/aktif
 
         function formatRupiah(angka) {
             return 'Rp ' + parseFloat(angka).toLocaleString('id-ID');
@@ -315,7 +326,21 @@
             try {
                 let { data: config } = await dbCloud.from('konfigurasi_web').select('*').eq('id', 1).single();
                 if (config) {
-                    document.getElementById("theme-logo").value = config.logo_url || "";
+                    currentLogoUrl = config.logo_url || "";
+                    
+                    // Render pratinjau logo saat ini
+                    const imgPreview = document.getElementById("theme-logo-preview");
+                    const placeholder = document.getElementById("theme-logo-placeholder");
+                    if (currentLogoUrl) {
+                        imgPreview.src = currentLogoUrl;
+                        imgPreview.classList.remove("hidden-section");
+                        placeholder.classList.add("hidden-section");
+                    } else {
+                        imgPreview.src = "";
+                        imgPreview.classList.add("hidden-section");
+                        placeholder.classList.remove("hidden-section");
+                    }
+
                     document.getElementById("theme-nama").value = config.nama_galeri || "";
                     document.getElementById("theme-deskripsi-hero").value = config.deskripsi_hero || "";
                     document.getElementById("theme-bg-utama").value = config.warna_bg_utama || "#0f172a";
@@ -509,10 +534,26 @@
             const btnTema = document.getElementById("btn-simpan-tema");
             btnTema.innerText = "DEPLOYING TEMA..."; btnTema.disabled = true;
 
+            const logoFile = document.getElementById("theme-logo").files[0];
+            let logoUrl = currentLogoUrl; // Default ke logo saat ini jika tidak upload yang baru
+
             try {
+                // Proses upload logo jika ada file yang dimasukkan admin
+                if (logoFile) {
+                    const fileExt = logoFile.name.split('.').pop();
+                    // Folderized di dalam bucket agar rapi (logo/nama_file)
+                    const fileName = `logo/${Date.now()}_logo.${fileExt}`;
+                    
+                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, logoFile);
+                    if (uploadError) throw uploadError;
+
+                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
+                    logoUrl = publicUrlData.publicUrl;
+                }
+
                 const { error } = await dbCloud.from('konfigurasi_web').upsert({ 
                     id: 1, 
-                    logo_url: document.getElementById("theme-logo").value, 
+                    logo_url: logoUrl, 
                     nama_galeri: document.getElementById("theme-nama").value,
                     deskripsi_hero: document.getElementById("theme-deskripsi-hero").value, 
                     warna_bg_utama: document.getElementById("theme-bg-utama").value,
@@ -522,7 +563,12 @@
                     updated_at: new Date()
                 });
                 if (error) throw error;
+                
+                // Clear input file setelah sukses
+                document.getElementById("theme-logo").value = "";
+                
                 alert("Tema berhasil di-deploy!");
+                await muatDataAdmin(); // Refresh data dan pratinjau logo baru
             } catch (err) {
                 alert("Gagal deploy tema: " + err.message);
             } finally {
