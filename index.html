@@ -679,10 +679,10 @@
                     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
                     
                     // FIXED PERBAIKAN BUCKET STORAGE: Menggunakan bucket global default 'storage-maestro'
-                    let { error: uploadError } = await dbCloud.storage.from('storage-maestro').upload(fileName, fileFoto);
+                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fileFoto);
                     if (uploadError) throw uploadError;
 
-                    const { data: publicUrlData } = dbCloud.storage.from('storage-maestro').getPublicUrl(fileName);
+                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
                     fotoUrl = publicUrlData.publicUrl;
                 }
 
@@ -789,10 +789,10 @@
                     const fileExt = 'jpg';
                     const fileName = `logo/${Date.now()}_logo.${fileExt}`;
                     
-                    let { error: uploadError } = await dbCloud.storage.from('storage-maestro').upload(fileName, logoFile);
+                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, logoFile);
                     if (uploadError) throw uploadError;
 
-                    const { data: publicUrlData } = dbCloud.storage.from('storage-maestro').getPublicUrl(fileName);
+                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
                     logoUrl = publicUrlData.publicUrl;
                 }
 
@@ -801,10 +801,10 @@
                     const fileExt = 'jpg';
                     const fileName = `pelukis/${Date.now()}_pelukis.${fileExt}`;
                     
-                    let { error: uploadError } = await dbCloud.storage.from('storage-maestro').upload(fileName, fotoPelukis);
+                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fotoPelukis);
                     if (uploadError) throw uploadError;
 
-                    const { data: publicUrlData } = dbCloud.storage.from('storage-maestro').getPublicUrl(fileName);
+                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
                     fotoPelukisUrl = publicUrlData.publicUrl;
                 }
 
