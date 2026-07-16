@@ -752,7 +752,7 @@
         function bersihkanFormKarya() {
             document.getElementById("form-cms").reset();
             document.getElementById("input-id-lukisan").value = "";
-            document.getElementById("input-file-foto").required = true;
+            document.getElementById("input-file-foto").required = false; // Diubah menjadi false untuk mencegah isu validasi HTML5
             document.getElementById("info-file-edit").classList.add("hidden-section");
             document.getElementById("btn-batal-edit").classList.add("hidden-section");
             document.getElementById("btn-submit-karya").innerText = "Simpan Data";
