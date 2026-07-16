@@ -224,6 +224,10 @@
                                     <input type="checkbox" id="input-archive" checked class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
                                     <span class="text-slate-300">Publish ke Menu Koleksi (Arsip Katalog)</span>
                                 </label>
+                                <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
+                                    <input type="checkbox" id="input-lukis-wajah" class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
+                                    <span class="text-slate-300">Publish ke Jasa Lukis Wajah</span>
+                                </label>
                             </div>
                         </div>
 
@@ -245,7 +249,7 @@
                     <span>📋</span> Daftar Lukisan Terdaftar
                 </h2>
                 
-                <div class="hidden md:block overflow-x-auto rounded-xl border border-slate-850">
+                <div class="hidden md:block overflow-x-auto rounded-xl border border-slate-855">
                     <table class="w-full text-left border-collapse text-sm">
                         <thead>
                             <tr class="bg-slate-950 border-b border-slate-855 text-xs font-bold uppercase tracking-wider text-slate-400">
@@ -302,7 +306,7 @@
                     <div class="space-y-3 pt-4 border-t border-slate-800">
                         <span class="block text-xs font-bold uppercase tracking-widest text-amber-500">Palet Warna Interface Web</span>
                         <div class="grid grid-cols-2 gap-3">
-                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-850 flex items-center justify-between">
+                            <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-855 flex items-center justify-between">
                                 <span class="text-xs text-slate-400 pl-1">BG Utama</span>
                                 <input type="color" id="theme-bg-utama" value="#0f172a" class="w-8 h-8 bg-transparent border-0 cursor-pointer rounded">
                             </div>
@@ -431,7 +435,7 @@
             if (session && session.user) {
                 document.getElementById("seksi-login").classList.add("hidden-section");
                 document.getElementById("seksi-workspace").classList.remove("hidden-section");
-                gantiTabCms('dashboard'); // Set default ke Dashboard setelah Login
+                gantiTabCms('dashboard');
                 muatDataAdmin();
             } else {
                 document.getElementById("seksi-workspace").classList.add("hidden-section");
@@ -561,7 +565,7 @@
                         `);
 
                         containerMobile.insertAdjacentHTML('beforeend', `
-                            <div class="bg-slate-950/40 border border-slate-850 p-4 rounded-xl space-y-3">
+                            <div class="bg-slate-950/40 border border-slate-855 p-4 rounded-xl space-y-3">
                                 <div class="flex gap-3 items-center">
                                     <img src="${item.media}" class="w-16 h-16 object-cover rounded-xl border border-slate-800 shadow-sm flex-shrink-0">
                                     <div class="min-w-0 flex-1">
@@ -611,6 +615,7 @@
             const deskripsi = document.getElementById("input-deskripsi").value;
             const isFeatured = document.getElementById("input-featured").checked;
             const isArchive = document.getElementById("input-archive").checked;
+            const isLukisWajah = document.getElementById("input-lukis-wajah").checked;
             const fileFoto = document.getElementById("input-file-foto").files[0];
             const hargaBersih = document.getElementById("input-harga").value.replace(/\./g, "");
 
@@ -636,7 +641,8 @@
                     gradient,
                     deskripsi,
                     is_featured: isFeatured,
-                    is_archive: isArchive
+                    is_archive: isArchive,
+                    is_lukis_wajah: isLukisWajah
                 };
 
                 if (fotoUrl) { payload.media = fotoUrl; }
@@ -666,7 +672,7 @@
             const lukisan = dataLukisanAktif.find(item => item.id === id);
             if (!lukisan) return;
 
-            gantiTabCms('inventaris'); // Pindah ke tab inventaris otomatis
+            gantiTabCms('inventaris');
 
             document.getElementById("input-id-lukisan").value = lukisan.id;
             document.getElementById("input-judul").value = lukisan.judul;
@@ -678,6 +684,7 @@
             document.getElementById("input-deskripsi").value = lukisan.deskripsi || "";
             document.getElementById("input-featured").checked = lukisan.is_featured;
             document.getElementById("input-archive").checked = lukisan.is_archive;
+            document.getElementById("input-lukis-wajah").checked = lukisan.is_lukis_wajah || false;
 
             document.getElementById("input-file-foto").required = false;
             document.getElementById("info-file-edit").classList.remove("hidden-section");
