@@ -473,6 +473,55 @@
         }
 
         // ===================================================================
+        // 🛠️ UTALITAS SISTEM KOMPRESI GAMBAR (CANVAS HTML5)
+        // ===================================================================
+        function kompresFileGambar(file, maxDimensi = 1200, kualitas = 0.75) {
+            return new Promise((resolve, reject) => {
+                if (!file) return resolve(null);
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let lebar = img.width;
+                        let tinggi = img.height;
+
+                        if (lebar > maxDimensi || tinggi > maxDimensi) {
+                            if (lebar > tinggi) {
+                                tinggi *= maxDimensi / lebar;
+                                lebar = maxDimensi;
+                            } else {
+                                lebar *= maxDimensi / tinggi;
+                                tinggi = maxDimensi;
+                            }
+                        }
+
+                        canvas.width = lebar;
+                        canvas.height = tinggi;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, lebar, tinggi);
+
+                        canvas.toBlob((blob) => {
+                            if (blob) {
+                                const fileTerkompresi = new File([blob], file.name, {
+                                    type: 'image/jpeg',
+                                    lastModified: Date.now()
+                                });
+                                resolve(fileTerkompresi);
+                            } else {
+                                resolve(file);
+                            }
+                        }, 'image/jpeg', kualitas);
+                    };
+                    img.onerror = () => resolve(file);
+                };
+                reader.onerror = () => resolve(file);
+            });
+        }
+
+        // ===================================================================
         // 💾 OPERASI CRUD DATA & SINKRONISASI
         // ===================================================================
         async function muatDataAdmin() {
@@ -616,19 +665,24 @@
             const isFeatured = document.getElementById("input-featured").checked;
             const isArchive = document.getElementById("input-archive").checked;
             const isLukisWajah = document.getElementById("input-lukis-wajah").checked;
-            const fileFoto = document.getElementById("input-file-foto").files[0];
+            const fileFotoRaw = document.getElementById("input-file-foto").files[0];
             const hargaBersih = document.getElementById("input-harga").value.replace(/\./g, "");
 
             try {
                 let fotoUrl = null;
 
-                if (fileFoto) {
-                    const fileExt = fileFoto.name.split('.').pop();
+                if (fileFotoRaw) {
+                    // Kompres gambar otomatis ke skala web teroptimasi (Max 1200px kualitas 75%)
+                    const fileFoto = await kompresFileGambar(fileFotoRaw, 1200, 0.75);
+                    
+                    const fileExt = 'jpg'; // Format setelah dikompres via Canvas berubah jadi JPEG teroptimasi
                     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fileFoto);
+                    
+                    // FIXED PERBAIKAN BUCKET STORAGE: Menggunakan bucket global default 'storage-maestro'
+                    let { error: uploadError } = await dbCloud.storage.from('storage-maestro').upload(fileName, fileFoto);
                     if (uploadError) throw uploadError;
 
-                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
+                    const { data: publicUrlData } = dbCloud.storage.from('storage-maestro').getPublicUrl(fileName);
                     fotoUrl = publicUrlData.publicUrl;
                 }
 
@@ -723,30 +777,34 @@
             btnTema.innerText = "DEPLOYING GLOBAL DATA..."; btnTema.disabled = true;
             btnProfil.innerText = "DEPLOYING GLOBAL DATA..."; btnProfil.disabled = true;
 
-            const logoFile = document.getElementById("theme-logo").files[0];
-            const fotoPelukisFile = document.getElementById("theme-foto-pelukis").files[0];
+            const logoFileRaw = document.getElementById("theme-logo").files[0];
+            const fotoPelukisFileRaw = document.getElementById("theme-foto-pelukis").files[0];
             
             let logoUrl = currentLogoUrl; 
             let fotoPelukisUrl = currentFotoPelukisUrl;
 
             try {
-                if (logoFile) {
-                    const fileExt = logoFile.name.split('.').pop();
+                if (logoFileRaw) {
+                    const logoFile = await kompresFileGambar(logoFileRaw, 400, 0.85); // Kompres khusus logo resolusi sedang
+                    const fileExt = 'jpg';
                     const fileName = `logo/${Date.now()}_logo.${fileExt}`;
-                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, logoFile);
+                    
+                    let { error: uploadError } = await dbCloud.storage.from('storage-maestro').upload(fileName, logoFile);
                     if (uploadError) throw uploadError;
 
-                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
+                    const { data: publicUrlData } = dbCloud.storage.from('storage-maestro').getPublicUrl(fileName);
                     logoUrl = publicUrlData.publicUrl;
                 }
 
-                if (fotoPelukisFile) {
-                    const fileExt = fotoPelukisFile.name.split('.').pop();
+                if (fotoPelukisFileRaw) {
+                    const fotoPelukis = await kompresFileGambar(fotoPelukisFileRaw, 600, 0.8); // Kompres avatar profil pelukis
+                    const fileExt = 'jpg';
                     const fileName = `pelukis/${Date.now()}_pelukis.${fileExt}`;
-                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fotoPelukisFile);
+                    
+                    let { error: uploadError } = await dbCloud.storage.from('storage-maestro').upload(fileName, fotoPelukis);
                     if (uploadError) throw uploadError;
 
-                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
+                    const { data: publicUrlData } = dbCloud.storage.from('storage-maestro').getPublicUrl(fileName);
                     fotoPelukisUrl = publicUrlData.publicUrl;
                 }
 
