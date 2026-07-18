@@ -80,6 +80,9 @@
             <button onclick="gantiTabCms('profil-kontak')" id="btn-tab-profil-kontak" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
                 👤 Profil & Kontak WA
             </button>
+            <button onclick="gantiTabCms('landing-link')" id="btn-tab-landing-link" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                🔗 Links & Marketplace
+            </button>
         </div>
 
         <!-- TAB CONTENT 0: DASHBOARD STATISTIK -->
@@ -372,6 +375,71 @@
             </div>
         </div>
 
+        <!-- TAB CONTENT 4: KELOLA LANDING & MARKETPLACE LINKS -->
+        <div id="tab-landing-link" class="tab-content space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                <!-- FORM INPUT -->
+                <div class="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                    <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                        <span id="judul-form-landing">➕ Tambah Link Marketplace & Web</span>
+                    </h2>
+                    
+                    <form id="form-landing" onsubmit="simpanDataLanding(event)" class="space-y-5">
+                        <input type="hidden" id="input-id-landing">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nama Platform / Judul</label>
+                                <input type="text" id="input-landing-nama" required placeholder="Misal: Tokopedia, Shopee, Website Utama" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">URL Target (Link Tujuan)</label>
+                                <input type="url" id="input-landing-url" required placeholder="https://tokopedia.com/iwanpolesart" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">File Logo Platform</label>
+                            <input type="file" id="input-landing-logo" accept="image/*" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-2 text-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                            <p id="info-logo-landing-edit" class="text-[10px] text-slate-500 italic mt-1 hidden-section">*Kosongkan jika tidak ingin mengganti logo platform.</p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button type="submit" id="btn-submit-landing" class="w-full sm:flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3.5 rounded-xl transition-all tracking-wider uppercase text-xs cursor-pointer shadow-lg shadow-amber-500/10">
+                                Simpan Data Link
+                            </button>
+                            <button type="button" id="btn-batal-landing" onclick="bersihkanFormLanding()" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-750 text-slate-400 hover:text-white px-5 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider border border-slate-700 transition-all cursor-pointer hidden-section">
+                                Batal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TABEL DATA -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-4 shadow-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                    <span>📋</span> Daftar Link Aktif (Fase 2 Target)
+                </h2>
+                
+                <div class="overflow-x-auto rounded-xl border border-slate-855">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-950 border-b border-slate-855 text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <th class="p-4 text-center w-20">Logo</th>
+                                <th class="p-4">Nama Platform</th>
+                                <th class="p-4">URL Target</th>
+                                <th class="p-4 text-center w-40">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-list-landing" class="divide-y divide-slate-850 bg-slate-900/40">
+                            <tr><td colspan="4" class="p-8 text-center text-slate-500 italic">Memuat data link...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- SDK SUPABASE -->
@@ -382,6 +450,7 @@
 
         const dbCloud = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let dataLukisanAktif = []; 
+        let dataLandingAktif = [];
         let currentLogoUrl = ""; 
         let currentFotoPelukisUrl = ""; 
 
@@ -409,7 +478,8 @@
                 { id: 'btn-tab-dashboard', key: 'dashboard' },
                 { id: 'btn-tab-inventaris', key: 'inventaris' },
                 { id: 'btn-tab-branding', key: 'branding' },
-                { id: 'btn-tab-profil-kontak', key: 'profil-kontak' }
+                { id: 'btn-tab-profil-kontak', key: 'profil-kontak' },
+                { id: 'btn-tab-landing-link', key: 'landing-link' }
             ];
 
             menuButtons.forEach(btnInfo => {
@@ -642,6 +712,10 @@
                     tbody.innerHTML = tNoData;
                     containerMobile.innerHTML = mNoData;
                 }
+
+                // Tambahan Pemicu untuk Memuat Tab Links & Marketplace
+                await muatDataLanding();
+
             } catch (err) {
                 console.error(err);
                 const errMsg = `Gagal sinkronisasi data cloud: ${err.message}`;
@@ -672,13 +746,10 @@
                 let fotoUrl = null;
 
                 if (fileFotoRaw) {
-                    // Kompres gambar otomatis ke skala web teroptimasi (Max 1200px kualitas 75%)
                     const fileFoto = await kompresFileGambar(fileFotoRaw, 1200, 0.75);
-                    
-                    const fileExt = 'jpg'; // Format setelah dikompres via Canvas berubah jadi JPEG teroptimasi
+                    const fileExt = 'jpg'; 
                     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
                     
-                    // FIXED PERBAIKAN BUCKET STORAGE: Menggunakan bucket global default 'storage-maestro'
                     let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fileFoto);
                     if (uploadError) throw uploadError;
 
@@ -752,7 +823,7 @@
         function bersihkanFormKarya() {
             document.getElementById("form-cms").reset();
             document.getElementById("input-id-lukisan").value = "";
-            document.getElementById("input-file-foto").required = false; // Diubah menjadi false untuk mencegah isu validasi HTML5
+            document.getElementById("input-file-foto").required = false;
             document.getElementById("info-file-edit").classList.add("hidden-section");
             document.getElementById("btn-batal-edit").classList.add("hidden-section");
             document.getElementById("btn-submit-karya").innerText = "Simpan Data";
@@ -785,7 +856,7 @@
 
             try {
                 if (logoFileRaw) {
-                    const logoFile = await kompresFileGambar(logoFileRaw, 400, 0.85); // Kompres khusus logo resolusi sedang
+                    const logoFile = await kompresFileGambar(logoFileRaw, 400, 0.85); 
                     const fileExt = 'jpg';
                     const fileName = `logo/${Date.now()}_logo.${fileExt}`;
                     
@@ -797,7 +868,7 @@
                 }
 
                 if (fotoPelukisFileRaw) {
-                    const fotoPelukis = await kompresFileGambar(fotoPelukisFileRaw, 600, 0.8); // Kompres avatar profil pelukis
+                    const fotoPelukis = await kompresFileGambar(fotoPelukisFileRaw, 600, 0.8); 
                     const fileExt = 'jpg';
                     const fileName = `pelukis/${Date.now()}_pelukis.${fileExt}`;
                     
@@ -834,6 +905,128 @@
             } finally {
                 btnTema.innerText = "Deploy Perubahan Branding"; btnTema.disabled = false;
                 btnProfil.innerText = "Deploy Perubahan Profil & Kontak"; btnProfil.disabled = false;
+            }
+        }
+
+        // ===================================================================
+        // 🔗 NEW MODUL: MANAGEMENT LINK LANDING & MARKETPLACE
+        // ===================================================================
+        async function muatDataLanding() {
+            try {
+                let { data: list, error } = await dbCloud.from('landing_marketplace').select('*').order('created_at', { ascending: false });
+                if (error) throw error;
+
+                dataLandingAktif = list || [];
+                const tbody = document.getElementById("tabel-list-landing");
+                tbody.innerHTML = "";
+
+                if(dataLandingAktif.length > 0) {
+                    dataLandingAktif.forEach(item => {
+                        tbody.insertAdjacentHTML('beforeend', `
+                            <tr class="hover:bg-slate-950/40 transition-colors group">
+                                <td class="p-4 flex justify-center">
+                                    <img src="${item.logo_url}" class="w-10 h-10 object-contain bg-slate-950 p-1 rounded-xl border border-slate-800 shadow-md">
+                                </td>
+                                <td class="p-4 font-semibold text-white">${item.nama_platform}</td>
+                                <td class="p-4 font-mono text-xs text-blue-400 truncate max-w-xs"><a href="${item.target_url}" target="_blank">${item.target_url}</a></td>
+                                <td class="p-4 text-center space-x-2">
+                                    <button onclick="pemicuEditLanding(${item.id})" class="text-xs bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500 hover:text-slate-950 px-3 py-1.5 rounded-xl text-amber-400 font-semibold cursor-pointer">Ubah</button>
+                                    <button onclick="hapusLanding(${item.id})" class="text-xs bg-red-500/10 border border-red-500/20 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl text-red-400 font-semibold cursor-pointer">Hapus</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500">Belum ada link marketplace terdaftar.</td></tr>`;
+                }
+            } catch (err) {
+                console.error("Gagal load data landing link:", err);
+            }
+        }
+
+        async function simpanDataLanding(e) {
+            e.preventDefault();
+            const btnSubmit = document.getElementById("btn-submit-landing");
+            btnSubmit.innerText = "PROSES WRITE DATABASE..."; btnSubmit.disabled = true;
+
+            const idLanding = document.getElementById("input-id-landing").value;
+            const namaPlatform = document.getElementById("input-landing-nama").value;
+            const targetUrl = document.getElementById("input-landing-url").value;
+            const fileLogoRaw = document.getElementById("input-landing-logo").files[0];
+
+            try {
+                let logoUrl = null;
+
+                if (fileLogoRaw) {
+                    const fileLogo = await kompresFileGambar(fileLogoRaw, 500, 0.85);
+                    const fileExt = 'jpg';
+                    const fileName = `landing/${Date.now()}_platform.${fileExt}`;
+                    
+                    let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fileLogo);
+                    if (uploadError) throw uploadError;
+
+                    const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
+                    logoUrl = publicUrlData.publicUrl;
+                }
+
+                const payload = {
+                    nama_platform: namaPlatform,
+                    target_url: targetUrl
+                };
+
+                if (logoUrl) { payload.logo_url = logoUrl; }
+
+                if (idLanding) {
+                    const { error: updateError } = await dbCloud.from('landing_marketplace').update(payload).eq('id', idLanding);
+                    if (updateError) throw updateError;
+                    alert("Data link marketplace berhasil diperbarui!");
+                } else {
+                    if (!logoUrl) throw new Error("File logo platform wajib diunggah untuk tautan baru!");
+                    const { error: insertError } = await dbCloud.from('landing_marketplace').insert([payload]);
+                    if (insertError) throw insertError;
+                    alert("Data link marketplace berhasil ditambahkan!");
+                }
+
+                bersihkanFormLanding();
+                await muatDataLanding();
+            } catch (err) {
+                alert("Gagal memproses data: " + err.message);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerText = "Simpan Data Link";
+            }
+        }
+
+        function pemicuEditLanding(id) {
+            const item = dataLandingAktif.find(l => l.id === id);
+            if (!item) return;
+
+            document.getElementById("input-id-landing").value = item.id;
+            document.getElementById("input-landing-nama").value = item.nama_platform;
+            document.getElementById("input-landing-url").value = item.target_url;
+
+            document.getElementById("input-landing-logo").required = false;
+            document.getElementById("info-logo-landing-edit").classList.remove("hidden-section");
+            document.getElementById("btn-batal-landing").classList.remove("hidden-section");
+            document.getElementById("btn-submit-landing").innerText = "Simpan Perubahan Link";
+            document.getElementById("judul-form-landing").innerText = `✏️ Edit Link: "${item.nama_platform}"`;
+        }
+
+        function bersihkanFormLanding() {
+            document.getElementById("form-landing").reset();
+            document.getElementById("input-id-landing").value = "";
+            document.getElementById("input-landing-logo").required = false;
+            document.getElementById("info-logo-landing-edit").classList.add("hidden-section");
+            document.getElementById("btn-batal-landing").classList.add("hidden-section");
+            document.getElementById("btn-submit-landing").innerText = "Simpan Data Link";
+            document.getElementById("judul-form-landing").innerText = "➕ Tambah Link Marketplace & Web";
+        }
+
+        async function hapusLanding(id) {
+            if(confirm("Yakin ingin menghapus link platform ini?")) {
+                const { error } = await dbCloud.from('landing_marketplace').delete().eq('id', id);
+                if(error) alert(error.message);
+                else { alert("Link berhasil dihapus!"); await muatDataLanding(); }
             }
         }
 

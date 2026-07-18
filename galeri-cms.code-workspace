@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../iwan-poles-art"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "galeri-cms"
+	}
+}
