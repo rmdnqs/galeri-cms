@@ -74,6 +74,9 @@
             <button onclick="gantiTabCms('inventaris')" id="btn-tab-inventaris" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
                 📦 Inventaris & Lukisan
             </button>
+            <button onclick="gantiTabCms('kategori')" id="btn-tab-kategori" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                🏷️ Kelola Kategori
+            </button>
             <button onclick="gantiTabCms('banner')" id="btn-tab-banner" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
                 🖼️ Pengaturan Banner
             </button>
@@ -176,10 +179,7 @@
                             <div class="space-y-2">
                                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Kategori Kurasi Seni</label>
                                 <select id="input-kategori" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
-                                    <option value="Abstrak">Abstrak</option>
-                                    <option value="Realisme">Realisme</option>
-                                    <option value="Lanskap">Lanskap</option>
-                                    <option value="Lainnya">Lainnya</option>
+                                    <option value="">Memuat Kategori...</option>
                                 </select>
                             </div>
                             <div class="space-y-2">
@@ -274,6 +274,47 @@
                     </table>
                 </div>
                 <div id="kartu-list-lukisan-mobile" class="block md:hidden space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB CONTENT INTERFACES BARU: KATEGORI MANAGEMENT -->
+        <!-- ========================================== -->
+        <div id="tab-kategori" class="tab-content space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                <div class="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                    <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                        <span>🏷️</span> Tambah Kategori Kurasi Baru
+                    </h2>
+                    <form id="form-kategori" onsubmit="simpanDataKategori(event)" class="space-y-4">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Nama Kategori</label>
+                            <input type="text" id="input-nama-kategori" required placeholder="Contoh: Abstrak, Realisme, Lanskap, Kaligrafi" class="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition-all">
+                        </div>
+                        <button type="submit" id="btn-submit-kategori" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-widest transition-all cursor-pointer shadow-lg shadow-emerald-600/10">
+                            Simpan Data Kategori
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-4 shadow-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                    <span>📋</span> Daftar Kategori Terdaftar
+                </h2>
+                <div class="overflow-x-auto rounded-xl border border-slate-855">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-950 border-b border-slate-855 text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <th class="p-4">Nama Kategori Kurasi</th>
+                                <th class="p-4 text-center w-40">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-list-kategori" class="divide-y divide-slate-850 bg-slate-900/40">
+                            <tr><td colspan="2" class="p-8 text-center text-slate-500 italic">Memuat list data kategori...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -516,6 +557,7 @@
         const dbCloud = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let dataLukisanAktif = []; 
         let dataLandingAktif = [];
+        let dataKategoriAktif = [];
         let currentLogoUrl = ""; 
         let currentFotoPelukisUrl = ""; 
         
@@ -567,6 +609,7 @@
             const menuButtons = [
                 { id: 'btn-tab-dashboard', key: 'dashboard' },
                 { id: 'btn-tab-inventaris', key: 'inventaris' },
+                { id: 'btn-tab-kategori', key: 'kategori' },
                 { id: 'btn-tab-banner', key: 'banner' },
                 { id: 'btn-tab-branding', key: 'branding' },
                 { id: 'btn-tab-profil-kontak', key: 'profil-kontak' },
@@ -687,6 +730,10 @@
         // ===================================================================
         async function muatDataAdmin() {
             try {
+                // ====== LOAD DYNAMIC LOOKUP KATEGORI DARI TABLE: kategori ======
+                await muatDataKategori();
+
+                // ====== LOAD DATA CONFIGURATION TEMA ======
                 let { data: config } = await dbCloud.from('konfigurasi_web').select('*').eq('id', 1).single();
                 if (config) {
                     currentLogoUrl = config.logo_url || "";
@@ -914,7 +961,110 @@
         }
 
         // ===================================================================
-        // 🖼️ FUNGSI UPLOAD & UPDATE BANNER BARU KE KONFIGURASI_WEB
+        // 🏷️ MODUL MANAJEMEN KATEGORI (FUNGSI BACKEND & LOGIKA)
+        // ===================================================================
+        async function muatDataKategori() {
+            try {
+                const selectKategori = document.getElementById("input-kategori");
+                const tbodyKategori = document.getElementById("tabel-list-kategori");
+                
+                selectKategori.innerHTML = '<option value="">Memuat Kategori...</option>';
+                tbodyKategori.innerHTML = '<tr><td colspan="2" class="p-4 text-center text-slate-500 italic">Memuat list data kategori...</td></tr>';
+                
+                let { data: listKategori, error: errorKategori } = await dbCloud
+                    .from('kategori')
+                    .select('*');
+                
+                if (errorKategori) {
+                    console.error("Gagal load tabel kategori dari Supabase:", errorKategori);
+                    throw errorKategori;
+                }
+                
+                dataKategoriAktif = listKategori || [];
+                selectKategori.innerHTML = '<option value="">-- Pilih Kategori --</option>';
+                tbodyKategori.innerHTML = "";
+
+                if (dataKategoriAktif.length > 0) {
+                    dataKategoriAktif.forEach(k => {
+                        const valKategori = k.nama_kategori || k.nama;
+                        if (valKategori) {
+                            selectKategori.insertAdjacentHTML('beforeend', `
+                                <option value="${valKategori}">${valKategori}</option>
+                            `);
+
+                            tbodyKategori.insertAdjacentHTML('beforeend', `
+                                <tr class="hover:bg-slate-950/40 transition-colors group">
+                                    <td class="p-4 font-semibold text-white">${valKategori}</td>
+                                    <td class="p-4 text-center">
+                                        <button onclick="hapusKategori(${k.id})" class="text-xs bg-red-500/10 border border-red-500/20 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl text-red-400 font-semibold cursor-pointer">Hapus</button>
+                                    </td>
+                                </tr>
+                            `);
+                        }
+                    });
+                } else {
+                    selectKategori.innerHTML = `
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="Abstrak">Abstrak</option>
+                        <option value="Realisme">Realisme</option>
+                        <option value="Lanskap">Lanskap</option>
+                        <option value="Lainnya">Lainnya</option>
+                    `;
+                    tbodyKategori.innerHTML = `<tr><td colspan="2" class="p-4 text-center text-slate-500 italic">Belum ada kategori terekam di database cloud. Gunakan fail-safe lokal.</td></tr>`;
+                }
+            } catch (err) {
+                console.error("Error pada modul muatDataKategori:", err);
+            }
+        }
+
+        async function simpanDataKategori(e) {
+            e.preventDefault();
+            const btnSubmit = document.getElementById("btn-submit-kategori");
+            btnSubmit.innerText = "PROSES WRITE DATABASE..."; btnSubmit.disabled = true;
+
+            const namaKategori = document.getElementById("input-nama-kategori").value.trim();
+
+            try {
+                if(!namaKategori) throw new Error("Nama kategori tidak boleh kosong!");
+                
+                const payload = {
+                    nama_kategori: namaKategori
+                };
+
+                const { error: insertError } = await dbCloud.from('kategori').insert([payload]);
+                if (insertError) {
+                    // Coba fallback jika di database nama kolomnya adalah 'nama' bukan 'nama_kategori'
+                    const fallbackPayload = { nama: namaKategori };
+                    const { error: fallbackError } = await dbCloud.from('kategori').insert([fallbackPayload]);
+                    if (fallbackError) throw fallbackError;
+                }
+
+                alert("Data kategori baru berhasil disimpan!");
+                document.getElementById("form-kategori").reset();
+                await muatDataKategori();
+            } catch (err) {
+                alert("Gagal memproses tambah kategori: " + err.message);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerText = "Simpan Data Kategori";
+            }
+        }
+
+        async function hapusKategori(id) {
+            if(confirm("Yakin ingin menghapus kategori ini secara permanen dari cloud?")) {
+                try {
+                    const { error } = await dbCloud.from('kategori').delete().eq('id', id);
+                    if(error) throw error;
+                    alert("Kategori berhasil dihapus!");
+                    await muatDataKategori();
+                } catch (err) {
+                    alert("Gagal menghapus kategori: " + err.message);
+                }
+            }
+        }
+
+        // ===================================================================
+        // 🖼 Img UPLOAD & UPDATE BANNER BARU KE KONFIGURASI_WEB
         // ===================================================================
         async function simpanBannerGlobalCMS() {
             const btnBanner = document.getElementById("btn-simpan-banner");
@@ -983,7 +1133,10 @@
             document.getElementById("input-id-lukisan").value = lukisan.id;
             document.getElementById("input-judul").value = lukisan.judul;
             document.getElementById("input-harga").value = parseFloat(lukisan.harga).toLocaleString("id-ID");
-            document.getElementById("input-kategori").value = lukisan.kategori || "Abstrak";
+            
+            // Mengatur value dropdown kategori dinamis secara aman
+            document.getElementById("input-kategori").value = lukisan.kategori || "";
+            
             document.getElementById("input-ukuran").value = lukisan.ukuran;
             document.getElementById("input-status").value = lukisan.status || "Tersedia";
             document.getElementById("input-gradient").value = lukisan.gradient || "from-amber-500/20 to-transparent";
@@ -1228,7 +1381,7 @@
                 }
                 const { error } = await dbCloud.from('landing_marketplace').delete().eq('id', id);
                 if(error) alert(error.message);
-                else { alert("Link berhasil dihapus!"); await muatDataLanding(); }
+                else { alert("Link berhasil erased!"); await muatDataLanding(); }
             }
         }
 
