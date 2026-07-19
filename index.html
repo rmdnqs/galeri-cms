@@ -74,6 +74,9 @@
             <button onclick="gantiTabCms('inventaris')" id="btn-tab-inventaris" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
                 📦 Inventaris & Lukisan
             </button>
+            <button onclick="gantiTabCms('banner')" id="btn-tab-banner" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                🖼️ Pengaturan Banner
+            </button>
             <button onclick="gantiTabCms('branding')" id="btn-tab-branding" class="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300">
                 🎨 Identitas & Branding
             </button>
@@ -139,8 +142,8 @@
                     <button onclick="gantiTabCms('inventaris')" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl text-slate-300 transition-all cursor-pointer">
                         📦 Kelola Lukisan
                     </button>
-                    <button onclick="gantiTabCms('branding')" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl text-slate-300 transition-all cursor-pointer">
-                        🎨 Ubah Warna & Logo
+                    <button onclick="gantiTabCms('banner')" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl text-slate-300 transition-all cursor-pointer">
+                        🖼️ Atur Banner Slider
                     </button>
                 </div>
             </div>
@@ -217,7 +220,7 @@
                         </div>
 
                         <div class="p-4 bg-slate-950 border border-slate-855 rounded-xl space-y-3">
-                            <span class="block text-xs font-bold uppercase tracking-widest text-amber-500">Kategori Konten</span>
+                            <span class="block text-[11px] font-bold uppercase tracking-widest text-amber-500">Kategori Konten</span>
                             <div class="flex flex-col gap-2.5">
                                 <label class="flex items-start gap-3 cursor-pointer text-sm select-none">
                                     <input type="checkbox" id="input-featured" class="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 accent-amber-500 focus:ring-0">
@@ -271,6 +274,68 @@
                     </table>
                 </div>
                 <div id="kartu-list-lukisan-mobile" class="block md:hidden space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB CONTENT INTERFACES BARU: BANNER MANAGEMENT -->
+        <!-- ========================================== -->
+        <div id="tab-banner" class="tab-content">
+            <div class="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 border-b border-slate-800 pb-4">
+                    <span>🖼️</span> Halaman Manajemen Pengaturan Banner Utama Halaman Depan
+                </h2>
+                <p class="text-xs text-slate-400 leading-relaxed">Kelola hingga maksimal 3 gambar banner visual murni untuk pengisian slider karosel di landing page web utama galeri.</p>
+                
+                <div class="space-y-8 pt-2">
+                    <!-- BANNER 1 -->
+                    <div class="bg-slate-950 p-4 sm:p-6 rounded-2xl border border-slate-855 space-y-4">
+                        <span class="text-xs font-bold text-amber-500 uppercase tracking-widest block">Slot Media Banner 01</span>
+                        <div class="flex flex-col sm:flex-row items-center gap-5">
+                            <div class="w-full sm:w-48 aspect-[21/9] sm:aspect-[16/9] bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0">
+                                <img id="banner-preview-1" src="" alt="Banner 1" class="w-full h-full object-cover hidden-section">
+                                <span id="banner-placeholder-1" class="text-slate-600 text-xs font-bold">No Image Banner 1</span>
+                            </div>
+                            <div class="flex-1 w-full space-y-2">
+                                <input type="file" id="theme-banner-1" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                                <p class="text-[10px] text-slate-500">Rekomendasi aspek rasio lanskap lebar landscape (misal: 1920x800 px).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BANNER 2 -->
+                    <div class="bg-slate-950 p-4 sm:p-6 rounded-2xl border border-slate-855 space-y-4">
+                        <span class="text-xs font-bold text-amber-500 uppercase tracking-widest block">Slot Media Banner 02</span>
+                        <div class="flex flex-col sm:flex-row items-center gap-5">
+                            <div class="w-full sm:w-48 aspect-[21/9] sm:aspect-[16/9] bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0">
+                                <img id="banner-preview-2" src="" alt="Banner 2" class="w-full h-full object-cover hidden-section">
+                                <span id="banner-placeholder-2" class="text-slate-600 text-xs font-bold">No Image Banner 2</span>
+                            </div>
+                            <div class="flex-1 w-full space-y-2">
+                                <input type="file" id="theme-banner-2" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                                <p class="text-[10px] text-slate-500">Kosongkan/jangan diupload jika hanya ingin menampilkan 1 banner utama saja.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BANNER 3 -->
+                    <div class="bg-slate-950 p-4 sm:p-6 rounded-2xl border border-slate-855 space-y-4">
+                        <span class="text-xs font-bold text-amber-500 uppercase tracking-widest block">Slot Media Banner 03</span>
+                        <div class="flex flex-col sm:flex-row items-center gap-5">
+                            <div class="w-full sm:w-48 aspect-[21/9] sm:aspect-[16/9] bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0">
+                                <img id="banner-preview-3" src="" alt="Banner 3" class="w-full h-full object-cover hidden-section">
+                                <span id="banner-placeholder-3" class="text-slate-600 text-xs font-bold">No Image Banner 3</span>
+                            </div>
+                            <div class="flex-1 w-full space-y-2">
+                                <input type="file" id="theme-banner-3" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-750 cursor-pointer transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btn-simpan-banner" onclick="simpanBannerGlobalCMS()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-4 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-all shadow-lg shadow-amber-500/10">
+                        Simpan Pembaruan Media Banner
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -329,7 +394,7 @@
                     </div>
                     
                     <button id="btn-simpan-tema" onclick="simpanTemaGlobal()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-all shadow-lg shadow-amber-500/10">
-                        Deploy Perubahan Branding
+                        Simpan Perubahan Branding
                     </button>
                 </div>
             </div>
@@ -369,7 +434,7 @@
                     </div>
                     
                     <button id="btn-simpan-profil" onclick="simpanTemaGlobal()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-all shadow-lg shadow-amber-500/10">
-                        Deploy Perubahan Profil & Kontak
+                        Simpan Perubahan Profil & Kontak
                     </button>
                 </div>
             </div>
@@ -453,6 +518,11 @@
         let dataLandingAktif = [];
         let currentLogoUrl = ""; 
         let currentFotoPelukisUrl = ""; 
+        
+        // Cache String Data URL Eksisting untuk Banner CMS
+        let currentBanner1 = "";
+        let currentBanner2 = "";
+        let currentBanner3 = "";
 
         function formatRupiah(angka) {
             return 'Rp ' + parseFloat(angka).toLocaleString('id-ID');
@@ -468,6 +538,26 @@
         });
 
         // ===================================================================
+        // 🛠️ UTALITAS UNTUK MEMBERSIHKAN FILE USANG DI STORAGE
+        // ===================================================================
+        async function hapusFileDariStorageUrl(fullUrl) {
+            if (!fullUrl || fullUrl.trim() === "") return;
+            try {
+                // Ekstrak token path setelah folder /object/public/foto-lukisan/
+                const penanda = "/storage/v1/object/public/foto-lukisan/";
+                if (!fullUrl.includes(penanda)) return;
+                
+                const storagePath = fullUrl.split(penanda)[1];
+                if (storagePath) {
+                    await dbCloud.storage.from('foto-lukisan').remove([decodeURIComponent(storagePath)]);
+                    console.log(`Berhasil menghancurkan berkas usang: ${storagePath}`);
+                }
+            } catch (err) {
+                console.warn("Gagal membersihkan berkas usang di storage:", err);
+            }
+        }
+
+        // ===================================================================
         // 🗂️ NAVIGASI SISTEM TAB CMS
         // ===================================================================
         function gantiTabCms(tabName) {
@@ -477,6 +567,7 @@
             const menuButtons = [
                 { id: 'btn-tab-dashboard', key: 'dashboard' },
                 { id: 'btn-tab-inventaris', key: 'inventaris' },
+                { id: 'btn-tab-banner', key: 'banner' },
                 { id: 'btn-tab-branding', key: 'branding' },
                 { id: 'btn-tab-profil-kontak', key: 'profil-kontak' },
                 { id: 'btn-tab-landing-link', key: 'landing-link' }
@@ -601,6 +692,11 @@
                     currentLogoUrl = config.logo_url || "";
                     currentFotoPelukisUrl = config.foto_pelukis || "";
                     
+                    // Ambil cache data banner eksisting
+                    currentBanner1 = config.banner_url_1 || "";
+                    currentBanner2 = config.banner_url_2 || "";
+                    currentBanner3 = config.banner_url_3 || "";
+
                     // Render data analitik ke dashboard
                     document.getElementById("stat-pengunjung").innerText = (config.total_pengunjung || 0).toLocaleString('id-ID');
                     document.getElementById("stat-klik-wa").innerText = (config.total_klik_wa || 0).toLocaleString('id-ID');
@@ -629,6 +725,23 @@
                         avatarPreview.src = "";
                         avatarPreview.classList.add("hidden-section");
                         avatarPlaceholder.classList.remove("hidden-section");
+                    }
+
+                    // ====== RENDERING VISUAL PRATINJAU BANNER CMS SYSTEM ======
+                    for (let i = 1; i <= 3; i++) {
+                        const bPreview = document.getElementById(`banner-preview-${i}`);
+                        const bPlaceholder = document.getElementById(`banner-placeholder-${i}`);
+                        const currentUrl = i === 1 ? currentBanner1 : (i === 2 ? currentBanner2 : currentBanner3);
+
+                        if (currentUrl) {
+                            bPreview.src = currentUrl;
+                            bPreview.classList.remove("hidden-section");
+                            bPlaceholder.classList.add("hidden-section");
+                        } else {
+                            bPreview.src = "";
+                            bPreview.classList.add("hidden-section");
+                            bPlaceholder.classList.remove("hidden-section");
+                        }
                     }
 
                     document.getElementById("theme-nama").value = config.nama_galeri || "";
@@ -692,7 +805,7 @@
                                         <p class="text-xs text-slate-400 font-mono mt-0.5">${item.ukuran}</p>
                                     </div>
                                 </div>
-                                <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-850/50">
+                                <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-855/50">
                                     <div class="space-y-1">
                                         <span class="bg-slate-900 px-2 py-0.5 rounded text-[11px] border border-slate-800 text-slate-300 mr-1.5">${item.kategori || '-'}</span>
                                         <span class="text-[11px] px-2 py-0.5 rounded-full font-semibold border ${badgeColor}">${item.status}</span>
@@ -713,7 +826,6 @@
                     containerMobile.innerHTML = mNoData;
                 }
 
-                // Tambahan Pemicu untuk Memuat Tab Links & Marketplace
                 await muatDataLanding();
 
             } catch (err) {
@@ -746,6 +858,14 @@
                 let fotoUrl = null;
 
                 if (fileFotoRaw) {
+                    // JIKA MODEMU ADALAH EDIT, HANCURKAN MEDIA LAMA DI STORAGE DULU
+                    if (idLukisan) {
+                        const lukisanLama = dataLukisanAktif.find(item => item.id == idLukisan);
+                        if (lukisanLama && lukisanLama.media) {
+                            await hapusFileDariStorageUrl(lukisanLama.media);
+                        }
+                    }
+
                     const fileFoto = await kompresFileGambar(fileFotoRaw, 1200, 0.75);
                     const fileExt = 'jpg'; 
                     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
@@ -793,6 +913,67 @@
             }
         }
 
+        // ===================================================================
+        // 🖼️ FUNGSI UPLOAD & UPDATE BANNER BARU KE KONFIGURASI_WEB
+        // ===================================================================
+        async function simpanBannerGlobalCMS() {
+            const btnBanner = document.getElementById("btn-simpan-banner");
+            btnBanner.innerText = "PROCESSING UPLOAD BANNER...";
+            btnBanner.disabled = true;
+
+            let b1Url = currentBanner1;
+            let b2Url = currentBanner2;
+            let b3Url = currentBanner3;
+
+            try {
+                // Loop check file upload
+                for (let i = 1; i <= 3; i++) {
+                    const fileRaw = document.getElementById(`theme-banner-${i}`).files[0];
+                    if (fileRaw) {
+                        // MEMBERSIHKAN BANNER LAMA SEBELUM UPLOAD FILE BARU
+                        const bannerLamaUrl = i === 1 ? currentBanner1 : (i === 2 ? currentBanner2 : currentBanner3);
+                        if (bannerLamaUrl) {
+                            await hapusFileDariStorageUrl(bannerLamaUrl);
+                        }
+
+                        const fileKompres = await kompresFileGambar(fileRaw, 1600, 0.8); // Kompresi aman banner landscape
+                        const fileName = `banners/banner_${i}_${Date.now()}.jpg`;
+                        
+                        let { error: uploadError } = await dbCloud.storage.from('foto-lukisan').upload(fileName, fileKompres);
+                        if (uploadError) throw uploadError;
+
+                        const { data: publicUrlData } = dbCloud.storage.from('foto-lukisan').getPublicUrl(fileName);
+                        if (i === 1) b1Url = publicUrlData.publicUrl;
+                        if (i === 2) b2Url = publicUrlData.publicUrl;
+                        if (i === 3) b3Url = publicUrlData.publicUrl;
+                    }
+                }
+
+                // Push perubahan ke row id 1 konfigurasi_web
+                const { error } = await dbCloud.from('konfigurasi_web').upsert({
+                    id: 1,
+                    banner_url_1: b1Url,
+                    banner_url_2: b2Url,
+                    banner_url_3: b3Url,
+                    updated_at: new Date()
+                });
+                if (error) throw error;
+
+                // Reset input file
+                document.getElementById("theme-banner-1").value = "";
+                document.getElementById("theme-banner-2").value = "";
+                document.getElementById("theme-banner-3").value = "";
+
+                alert("Media Banner Slider berhasil ditayangkan ke Halaman Utama!");
+                await muatDataAdmin();
+            } catch (err) {
+                alert("Gagal memproses simpan banner: " + err.message);
+            } finally {
+                btnBanner.innerText = "Simpan Pembaruan Media Banner";
+                btnBanner.disabled = false;
+            }
+        }
+
         function pemicuEditKarya(id) {
             const lukisan = dataLukisanAktif.find(item => item.id === id);
             if (!lukisan) return;
@@ -832,6 +1013,10 @@
 
         async function hapusKarya(id) {
             if(confirm("Yakin ingin menghapus lukisan ini secara permanen dari cloud?")) {
+                const lukisan = dataLukisanAktif.find(item => item.id === id);
+                if (lukisan && lukisan.media) {
+                    await hapusFileDariStorageUrl(lukisan.media);
+                }
                 const { error } = await dbCloud.from('lukisan').delete().eq('id', id);
                 if(error) alert(error.message);
                 else { alert("Aset berhasil dihapus!"); await muatDataAdmin(); }
@@ -856,6 +1041,9 @@
 
             try {
                 if (logoFileRaw) {
+                    if (currentLogoUrl) {
+                        await hapusFileDariStorageUrl(currentLogoUrl);
+                    }
                     const logoFile = await kompresFileGambar(logoFileRaw, 400, 0.85); 
                     const fileExt = 'jpg';
                     const fileName = `logo/${Date.now()}_logo.${fileExt}`;
@@ -868,6 +1056,9 @@
                 }
 
                 if (fotoPelukisFileRaw) {
+                    if (currentFotoPelukisUrl) {
+                        await hapusFileDariStorageUrl(currentFotoPelukisUrl);
+                    }
                     const fotoPelukis = await kompresFileGambar(fotoPelukisFileRaw, 600, 0.8); 
                     const fileExt = 'jpg';
                     const fileName = `pelukis/${Date.now()}_pelukis.${fileExt}`;
@@ -898,18 +1089,18 @@
                 document.getElementById("theme-logo").value = "";
                 document.getElementById("theme-foto-pelukis").value = "";
                 
-                alert("Konfigurasi Web berhasil dideploy secara global!");
+                alert("Konfigurasi Web berhasil disimpan secara global!");
                 await muatDataAdmin(); 
             } catch (err) {
-                alert("Gagal deploy konfigurasi: " + err.message);
+                alert("Gagal simpan konfigurasi: " + err.message);
             } finally {
-                btnTema.innerText = "Deploy Perubahan Branding"; btnTema.disabled = false;
-                btnProfil.innerText = "Deploy Perubahan Profil & Kontak"; btnProfil.disabled = false;
+                btnTema.innerText = "Simpan Perubahan Branding"; btnTema.disabled = false;
+                btnProfil.innerText = "Simpan Perubahan Profil & Kontak"; btnProfil.disabled = false;
             }
         }
 
         // ===================================================================
-        // 🔗 NEW MODUL: MANAGEMENT LINK LANDING & MARKETPLACE
+        // 🔗 MODUL: MANAGEMENT LINK LANDING & MARKETPLACE
         // ===================================================================
         async function muatDataLanding() {
             try {
@@ -958,6 +1149,13 @@
                 let logoUrl = null;
 
                 if (fileLogoRaw) {
+                    if (idLanding) {
+                        const landingLama = dataLandingAktif.find(item => item.id == idLanding);
+                        if (landingLama && landingLama.logo_url) {
+                            await hapusFileDariStorageUrl(landingLama.logo_url);
+                        }
+                    }
+
                     const fileLogo = await kompresFileGambar(fileLogoRaw, 500, 0.85);
                     const fileExt = 'jpg';
                     const fileName = `landing/${Date.now()}_platform.${fileExt}`;
@@ -1024,6 +1222,10 @@
 
         async function hapusLanding(id) {
             if(confirm("Yakin ingin menghapus link platform ini?")) {
+                const item = dataLandingAktif.find(l => l.id === id);
+                if (item && item.logo_url) {
+                    await hapusFileDariStorageUrl(item.logo_url);
+                }
                 const { error } = await dbCloud.from('landing_marketplace').delete().eq('id', id);
                 if(error) alert(error.message);
                 else { alert("Link berhasil dihapus!"); await muatDataLanding(); }
